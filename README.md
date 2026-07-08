@@ -1,4 +1,4 @@
-#Project Setup
+# Project Setup
 - Download Renpy [here](https://www.renpy.org/latest.html)
 - Install and launch renpy
 - go to preferences and select project directory to the folder containing this repo
