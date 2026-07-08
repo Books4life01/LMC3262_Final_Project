@@ -1,0 +1,10 @@
+# RenPyWeb progressive download rules - first match applies
+# '+' = progressive download, '-' = keep in game.zip (default/pre-loaded)
+
+# Disable progressive download for all audio so that it pre-loads 
+# and plays reliably via WebAudio on mobile browsers.
+- music game/audio/**
+- voice game/voice/**
+# Allow images to download progressively to keep initial load times low
++ image game/gui/**
++ image game/**
