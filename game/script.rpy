@@ -1,154 +1,206 @@
-## Main Game Script - Branching Story & Audio Integration Demo
+## Main Game Script - Bavarian Pillar Demo
 
-# Declare characters. 
+# Declare characters.
 # Custom color properties determine the display color of their names in the dialogue box.
-define p = Character("Player", color="#38bdf8")
-define g = Character("Guardian Echo", color="#c084fc")
-define n = Character(None, kind=nvl) # NVL narrator fallback if needed
+define p = Character("You (Barbarian)", color="#e11d48") # Bold red for the Barbarian from Baldur's Gate
+define n = Character("Nitwit", color="#22c55e") # Green for the gnome
 
 # Initialize variables to track game state
-default has_key = False
-default clues_found = 0
+default roll_modifier = 0 # Modified by failed riddle attempts
+default cursed = False # Tracks if Nitwit curses the player
 
 # The game starts here!
 label start:
 
     # 1. Start Ambient looping track
-    # The 'ambience' channel is our custom channel configured in options.rpy. 
-    # Since loop is True by default for it, it will loop indefinitely.
-    play sound "audio/ambience_drip.mp3"
+    play sound "audio/ambience_wind.mp3"
 
     # 2. Start Background Music (BGM)
-    # The 'music' channel is a standard Ren'Py looping channel.
-    play sound "audio/bgm_mystery.mp3"
+    play music "audio/bgm_forest.mp3"
 
     # Begin Story
     scene black with fade
     
-    "You wake up on a cold stone floor. The air is damp, heavy, and smells of old iron."
-    "In the distance, you hear the rhythmic sound of water dripping from the ceiling..."
+    "As you approach the pillar, you see a foreign text that appears to be in a language unlike anything you’ve ever studied back in Baldur's Gate."
     
-    p "Ugh... my head. Where am I? It's pitch black."
-    
-    # Showcase sound effect (one-shot SFX)
-    # The 'sound' channel is the standard Ren'Py one-shot channel.
-    play sound "audio/sfx_pickup.mp3"
-    "You feel around the floor and find a heavy metal flashlight. You click it on."
-    
-    "A beam of light cuts through the darkness, revealing a branching stone corridor."
-    
-    label corridor:
-        scene black with dissolve
-        "The dripping noise grows slightly louder here. You stand at a fork in the cave."
 
+    label investigate_pillar:
+        "Could this text provide valuable information on where to go next?You approach the rock and begin to investigate it closer. Roll 12+ to pass"
+
+        # Manual Investigation Roll Choice (Threshold: 12+)
         menu:
-            "Which direction will you explore?"
-
-            "Explore the Left Tunnel (Flooded Cavern)":
-                jump flooded_cavern
-
-            "Explore the Right Tunnel (Iron Gate)":
-                jump iron_gate
-
-            "Examine your surroundings closely":
-                jump search_area
-
-
-label flooded_cavern:
-    "You walk down the damp left tunnel. Water pools around your boots."
-    
-    # We increase the volume of the ambient dripping sound as we get closer to water
-    queue ambience "audio/ambience_drip.mp3"
-    "The cavern opens up to a subterranean lake. The water looks black and perfectly still."
-    
-    if not has_key:
-        "Something glints at the bottom of a shallow pool near the edge."
-        
-        menu:
-            "Reach into the icy water":
-                # Play a pickup sound effect
-                play sound "audio/sfx_pickup.mp3"
-                $ has_key = True
-                "You plunge your hand into the freezing water and retrieve a heavy brass key."
-                p "Brr! That was cold. But this key looks important."
-                jump corridor
+            "Investigation Check (Requires 12+):"
             
-            "Leave it alone":
-                "You decide not to risk reaching into the mysterious pool."
-                jump corridor
+            "SUCCESS (12 or higher)":
+                jump investigation_success
+                
+            " FAILURE (Under 12)":
+                jump investigation_failure
+
+
+label investigation_success:
+    "You don't find anything valuable about the text, but you do see a red hat popping out from behind the rock that was not there previously "
+    
+    menu:
+        "Call out to the hidden figure":
+            jump meet_nitwit_peaceful
+
+        "Ignore it and walk away":
+            jump meet_nitwit_surprise
+
+
+label investigation_failure:
+    "You’re unsure if this text is valuable or not, but maybe someone nearby could help?"
+    
+    menu:
+        "Walk away from the monument":
+            jump meet_nitwit_surprise
+
+
+label meet_nitwit_peaceful:
+    play sound "audio/nitwit_nap.mp3"
+    "The figure slowly moves his way around the monument, and approaches you..."
+    n  "You woke me from my afternoon nap. Who dares to disturb nitwit the wise?"
+    jump conversation_start
+
+
+label meet_nitwit_surprise:
+    "While walking away, a shadowy figure jumps out from the monument and stands before you"
+    play sound "audio/nitwit_surprise.mp3"
+    n "STOP RIGHT THERE TRAVELER! I AM NITWIT THE WISE THE ALL KNOWING GUARDIAN OF THIS MONUMENT!"
+    jump conversation_start
+
+
+label conversation_start:
+    menu:
+        "Ask Nitwit for help reading the text":
+            jump ask_for_help
+
+        "Ignore the noisy little gnome":
+            jump ignore_nitwit
+
+
+label ignore_nitwit:
+    "He angrily clears his throat"
+    play sound "audio/nitwit_ignore.mp3"
+    n "HELLO DID YOU NOT HEAR ME?! I AM NITWIT THE WISE IS THERE ANYTHING I CAN DO TO HELP YOU?"
+    jump ask_for_help
+
+
+label ask_for_help:
+
+    "He looks at you with deep disgust"
+    play sound "audio/nitwit_language.mp3"
+    n "What do you mean you dont know this language? This is bavarian, the best language in the entire world! How dare you!"
+    jump riddle_loop
+
+
+label riddle_loop:
+    play sound "audio/nitwit_quiz.mp3"
+
+    n "That explains a lot! Well I do have just the thing to remedy this, but It would be a diservice to you if I did not teach you about our world while i did it! "
+    n "If you wish for me to help you, you must first help me with something. Tell me What Prince, is it these angels kneel."
+
+    menu:
+        "Prince Karl":
+            jump riddle_wrong
+
+        "Prince Bismark":
+            jump riddle_wrong
+
+        "Prince Ferdinand":
+            jump riddle_correct
+
+
+label riddle_wrong:
+    n "Bah! Wrong! Completely wrong!"
+    play sound "audio/nitwit_wrong.mp3"
+    $ roll_modifier -= 1
+    "* Penalty: You must apply -1 to each roll in this encounter *"
+    "Ask to try again"
+    jump riddle_loop
+
+
+label riddle_correct:
+    play sound "audio/nitwit_correct.mp3"
+
+    n "Correct!"
+    "The gnome smiles at you, and reaches deep into his backpack to pull out a boo"
+    n "Here is a dictionary to translate bavarian, I can give it to you for a fee..."
+     
+    jump get_dictionary
+
+
+label get_dictionary:
+    menu:
+        "Grab the dictionary and run! (Barbarian Strength, Threshold: 7+)":
+            menu:
+                "Strength Check (Current Modifier: [roll_modifier]):"
+                
+                "SUCCESS (Total is 7 or higher)":
+                    jump grab_success
+                    
+                "FAILURE (Total is under 7)":
+                    jump curse
+
+        "Convince him to give it for free (Persuasion, Threshold: 14+)":
+            menu:
+                "Persuasion Check (Current Modifier: [roll_modifier]):"
+                
+                "SUCCESS (Total is 14 or higher)":
+                    jump persuasion_success
+                    
+                " FAILURE (Total is under 14)":
+                    jump curse
+
+        "Explain you cannot pay him":
+            jump curse
+
+
+label grab_success:
+    play sound "audio/nitwit_steal.mp3"
+    "You successfully take the dictionary from the gnome, he sighs"
+    n "I wish I could have had some money to buy some doner today, but it seems as if you've helped yourself..."
+    n "Good luck on the rest of your journey!"
+    jump story_ending
+
+
+label curse:
+    play sound "audio/nitwit_time.mp3"
+
+    "The gnome gets mad at you and throws the dictionary at your feet"
+    play sound "audio/nitwit_curse.mp3"
+
+    n "Fine! Take the stupid book, but I put a curse upon your head! Now get out of my sight!"
+    $ cursed = True
+    " **(DM gives you a curse for the next interaction)**"
+    jump story_ending
+
+
+label persuasion_success:
+    
+    "You fills his ears with praise of Nitwit the Generous, helper of lost travelers and ensure you will sing his praises forever more!"
+    "Nitwit blushes, puffing out his chest."
+    play sound "audio/nitwit_convince.mp3"
+    n "Well... I suppose a legendary sage like myself can spare a book. Here, take it!"
+    n "Though I really wanted a doner kebab..."
+    jump story_ending
+
+
+
+
+label story_ending:
+    stop music fadeout 2.0
+    "You flip open the Bavarian dictionary and compare the characters to the writing on the monument."
+    "Slowly, the mysterious ancient letters translate in your mind..."
+    
+    
+    "{b}\"Nitwit the Wise is a Fool.\"{/b}"
+    
+    if cursed:
+        "You chuckle, slipping the dictionary into your pocket, ignoring the tiny curse vibrating in your bones."
     else:
-        "The lake remains quiet and dark. You've already retrieved the brass key from here."
-        p "Nothing else of interest in the water."
-        jump corridor
+        "You laugh out loud and set off into the new world, dictionary in hand."
 
-
-label iron_gate:
-    "You approach the end of the right tunnel, where a rusted iron gate blocks the path."
-    
-    if not has_key:
-        "You shake the gate, but it is locked tight."
-        p "It's locked. It looks like it needs a heavy brass key."
-        
-        # We can fade out the music to highlight the player's isolation
-        stop music
-        "Without the key, there is nothing else you can do here."
-        
-        # Fade music back in as we prepare to return
-        play music "audio/bgm_mystery.mp3"
-        jump corridor
-    else:
-        "You insert the brass key into the rusted gate lock."
-        
-        # Play the gate creak sound effect
-        play sound "audio/sfx_door.mp3"
-        "With a heavy metallic groan, the gate swings open."
-        
-        jump chamber_of_echoes
-
-
-label search_area:
-    "You sweep your flashlight over the stone walls and inspect the debris."
-    $ clues_found += 1
-    
-    if clues_found == 1:
-        "You discover strange carvings on the wall: a drawing of a gate and a key submerged in water."
-        p "Ah, this must be a clue for how to proceed!"
-    elif clues_found == 2:
-        "You notice a faint breeze coming from the right. The air smells slightly cleaner there."
-    else:
-        "You find nothing else of value in the dust."
-        
-    jump corridor
-
-
-label chamber_of_echoes:
-    # Transition to a new area: fade out the dripping noise and play a new scene
-    stop ambience
-    stop music
-    
-    scene black with fade
-    "You step through the gate into a massive, cavernous cathedral of stone."
-    
-    # Play victory/chime sound
-    play sound "audio/sfx_pickup.mp3"
-    
-    # Introduce a new character with their own dialogue
-    g "Welcome, traveler. You have navigated the acoustic shadows of this place."
-    
-    g "Many enter, but few listen closely enough to find the key."
-    
-    p "Who are you? Can you show me the way out?"
-    
-    g "The path to the surface is open behind me. Go, and remember to trust what you hear."
-    
-    "A shaft of warm sunlight shines down from a opening in the distance."
-    
-    "You walk toward the light, feeling the warm wind on your face."
-    
-    # End scene: fade everything out
-    stop music
-    "You have escaped the cave."
-    
-    "CONGRATULATIONS - You completed the demo adventure!"
-    
+    "CONGRATULATIONS - You completed the adventure!"
     return

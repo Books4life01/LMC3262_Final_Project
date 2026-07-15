@@ -1,0 +1,51 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 25, in script
+    "You stand before a strange, ancient stone monument at the beginning of the rock[cite: 1]."
+NameError: name 'cite' is not defined
+
+-- Full Traceback ------------------------------------------------------------
+
+Traceback (most recent call last):
+  File "game/script.rpy", line 25, in script
+    "You stand before a strange, ancient stone monument at the beginning of the rock[cite: 1]."
+  File "renpy/ast.py", line 2935, in execute
+    Say.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "renpy/ast.py", line 994, in execute
+    renpy.exports.say(who, what, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/exports/sayexports.py", line 129, in say
+    who(what, *args, **kwargs)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/character.py", line 1550, in __call__
+    what = self.prefix_suffix("what", self.what_prefix, what, self.what_suffix)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/character.py", line 1464, in prefix_suffix
+    return sub(prefix) + sub(body, translate=not renpy.game.context().translated) + sub(suffix)
+                         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^              
+  File "renpy/character.py", line 1443, in sub
+    return renpy.substitutions.substitute(s, scope=scope, force=force, translate=translate)[0]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   
+  File "renpy/substitutions.py", line 355, in substitute
+    s = interpolate(s, variables)  # type: ignore
+        ~~~~~~~~~~~^^^^^^^^^^^^^^                
+  File "renpy/substitutions.py", line 89, in interpolate
+    raise e
+  File "renpy/substitutions.py", line 81, in interpolate
+    value = renpy.python.py_eval(code, {}, scope)
+            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1308, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1301, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+           ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<none>", line 1, in <module>
+NameError: name 'cite' is not defined
+
+Windows-11-10.0.26200-SP0 AMD64
+Ren'Py 8.5.3.26051504
+Balders Gate 4 1.0.0
+Tue Jul 14 14:02:08 2026
