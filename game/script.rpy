@@ -20,22 +20,21 @@ label start:
 
     # Begin Story
     scene black with fade
-    
+    jump start_troll_encounter
+
+label nitwit_start:
     "As you approach the pillar, you see a foreign text that appears to be in a language unlike anything you’ve ever studied back in Baldur's Gate."
-    
+    "Could this text provide valuable information on where to go next?You approach the rock and begin to investigate it closer. Roll 12+ to pass"
 
-    label investigate_pillar:
-        "Could this text provide valuable information on where to go next?You approach the rock and begin to investigate it closer. Roll 12+ to pass"
-
-        # Manual Investigation Roll Choice (Threshold: 12+)
-        menu:
-            "Investigation Check (Requires 12+):"
+    # Manual Investigation Roll Choice (Threshold: 12+)
+    menu:
+        "Investigation Check (Requires 12+):"
+        
+        "SUCCESS (12 or higher)":
+            jump investigation_success
             
-            "SUCCESS (12 or higher)":
-                jump investigation_success
-                
-            " FAILURE (Under 12)":
-                jump investigation_failure
+        " FAILURE (Under 12)":
+            jump investigation_failure
 
 
 label investigation_success:
