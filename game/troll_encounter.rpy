@@ -7,7 +7,6 @@ define sys = Character("System", color="#555555")
 # Troll Character Definitions with custom speech colors
 define troll_yellow = Character("Grumble (Yellow Troll)", color="#f1c40f")
 define troll_green = Character("Oakhaven (Green Troll)", color="#2ec865")
-define troll_red = Character("Elder Stonebrow (Red-Skirted Troll)", color="#e74c3c")
 
 # Initialize variables specific to this encounter
 default modifier_bonus = 0
@@ -19,7 +18,6 @@ default roar_dc = 18
 # Track which trolls have been dealt with/scared away
 default troll_1_completed = False
 default troll_2_completed = False
-default troll_3_completed = False
 
 # Track player style (violence vs peaceful) to affect the ending
 default violent_acts = 0
@@ -35,14 +33,13 @@ label start_troll_encounter:
 
     "In the distance, you see a sprawling wooden structure with towers and hand-carved beams and climbing bars and slides for easy escape. Small humanlike figures run about it screaming, looking very childlike."
     "You have come across a vulnerable halfling outpost."
-    "Surrounding the fort are three massive, ancient wooden trolls, who seem to be attacking the fort."
-    "You can choose how to handle this threat: approach and pacify the trolls individually, or attempt to confront them all at once."
+    "Surrounding the fort are two massive, ancient wooden trolls, who seem to be attacking the fort."
+    "You can choose how to handle this threat: approach and pacify the trolls individually, or attempt to confront them both at once."
     
     $ playground_passes = 0
     $ violent_acts = 0
     $ troll_1_completed = False
     $ troll_2_completed = False
-    $ troll_3_completed = False
     
     jump playground_hub
 
@@ -62,9 +59,6 @@ label playground_hub:
             
         "Approach the green-skinned, lovesick troll" if not troll_2_completed:
             jump troll_2_lovesick
-            
-        "Approach the red-skirted, elder matriarch troll" if not troll_3_completed:
-            jump troll_3_basket
             
         "Confront all the remaining trolls at once (Trigger Climax)":
             jump playground_climax
@@ -158,55 +152,6 @@ label troll_2_lovesick:
 
 
 # -------------------------------------------------------------------------
-# TROLL 3: THE HOSTILE HOMEMAKER (RED-SKIRTED TROLL)
-# -------------------------------------------------------------------------
-
-label troll_3_basket:
-    scene expression "#332211"
-    show elder_troll at truecenter
-    "You stand before the elder matriarch, clad in a faded blue and red skirt. She is clutching a heavy woven basket full of round wooden stones, glaring intensely at the sandbox."
-    
-    troll_red "Look at these poor, scrawny halfling hatchlings! No meat on their bones! No sand-mud in their bellies! Don't worry, little chicks, Grandma Stonebrow made a fresh batch of gravel-broth! Eat! EAT!"
-    
-    menu:
-        "Sneakily swap her stones for harmless leaves (Sleight of Hand, DC 12)":
-            sys "Roll a physical d20 for a Sleight of Hand check. Add your modifier ([modifier_bonus])."
-            menu:
-                "Roll is 12 or higher (Pass)":
-                    $ playground_passes += 1
-                    "With a quick flick of your wrists, you swap her heavy wooden stones for a handful of crisp autumn leaves."
-                    troll_red "Oh! Look how beautifully my stone-loaves have risen! So soft, so golden-green! Eat up, little ones!"
-                    "Delighted by her 'freshly baked leaf-bread,' she hums a soothing lullaby and stops threatening the sandbox."
-                    $ troll_3_completed = True
-                "Roll is under 12 (Fail)":
-                    "Your hand fumbles!"
-                    troll_red "Hey! Thief! You try to steal grandma's secret ingredients?!"
-                    "She shrieks in anger and pelts your shins with invisible, psychic gravel."
-                    call trigger_curse
-                    $ troll_3_completed = True
-
-        "Attack her basket to scatter the stones (Dexterity/Athletics Check, DC 12)":
-            $ violent_acts += 1
-            sys "Roll a physical d20 for a Dexterity or Athletics Check."
-            menu:
-                "Roll is 12 or higher (Pass)":
-                    $ playground_passes += 1
-                    "With a swift, brutal kick, you strike the bottom of her basket. The round wooden stones scatter completely across the playground woodchips."
-                    troll_red "My soup! My beautiful, bone-building gravel! Oh, you wicked, clumsy giant! Now I must spend hours gathering them!"
-                    "Distracted and furious, she abandons her siege on the sandbox to go chase down her rolling stones."
-                    $ troll_3_completed = True
-                "Roll is under 12 (Fail)":
-                    "You swing your leg to kick the basket, but she swerves it out of the way with surprising elder agility!"
-                    troll_red "Clumsy brute! You want to ruin my cooking? No treats for you! Go to your room!"
-                    "She smacks your legs with her heavy basket, bruising your shins and leaving you cursed."
-                    call trigger_curse
-                    # Note: troll_3_completed is NOT set to True because she successfully defended her basket!
-
-    "You back away to plan your next move."
-    jump playground_hub
-
-
-# -------------------------------------------------------------------------
 # PLAYGROUND CLIMAX & CONCLUSION
 # -------------------------------------------------------------------------
 
@@ -215,15 +160,15 @@ label playground_climax:
     show halfling_fort at truecenter
     "You gather your resolve to finish this encounter and secure the sandbox once and for all."
     
-    if not (troll_1_completed or troll_2_completed or troll_3_completed):
+    if not (troll_1_completed or troll_2_completed):
         "You haven't pacified or scared off a single troll yet! They all stand at full strength, their chaotic magic swirling wildly around the sandbox."
-    elif troll_1_completed and troll_2_completed and troll_3_completed:
-        "All three trolls have been dealt with, but you must make one final gesture to permanently seal the area's safety."
+    elif troll_1_completed and troll_2_completed:
+        "Both trolls have been dealt with, but you must make one final gesture to permanently seal the area's safety."
     else:
-        "Some trolls have been dealt with, while the remaining ones still watch the sandbox with chaotic intent."
+        "One troll has been dealt with, while the remaining one still watches the sandbox with chaotic intent."
         
-    # Calculate the dynamic DC right here before displaying the menu option
-    $ roar_dc = 5 if playground_passes == 3 else (8 if playground_passes == 2 else (15 if playground_passes == 1 else 18))
+    # Rebalanced dynamic DC for a maximum of 2 passes instead of 3
+    $ roar_dc = 5 if playground_passes == 2 else (12 if playground_passes == 1 else 18)
 
     menu:
         "Use Barbarian Roar (Intimidation, Target [roar_dc]+)":
@@ -250,15 +195,15 @@ label playground_climax:
 # -------------------------------------------------------------------------
 
 label playground_evaluation:
-    # Calculate final results & apply blessings
-    if playground_passes >= 3:
+    # Adjusted metrics for evaluation to match the 2-troll threshold
+    if playground_passes >= 2:
         "Incredible work. You saved the halfling outpost and brought ancient balance back to the playground."
         "The heavy, stagnant magic lifts, replaced by a warm, emerald glow that flows into your muscles."
         sys "You receive the Blessing of the Forest! You gain a +2 modifier to all rolls in the next encounter."
         $ modifier_bonus += 2
         
         # Guardian Angel final reaction depends on your methods
-        if violent_acts >= 2:
+        if violent_acts >= 1:
             "Through your mental link, you feel your Guardian Angel's presence. They look down at your scuffed knuckles and sigh."
             "GA: 'Well... it wasn't pretty, and those wooden beasts will probably have nightmares about you. But the halflings are safe. Clean yourself up, Barbarian.'"
         else:
