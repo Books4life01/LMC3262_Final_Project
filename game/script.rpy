@@ -20,6 +20,9 @@ label start:
 
     # Begin Story
     scene black with fade
+
+    jump lion_bridge_encounter
+
     play sound "audio/NarratorNitwit1.mp3"
     "As you approach the pillar, you see a foreign text that appears to be in a language unlike anything you’ve ever studied back in Baldur's Gate."
     
