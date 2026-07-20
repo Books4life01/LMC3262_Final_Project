@@ -20,24 +20,27 @@ label start:
 
     # Begin Story
     scene black with fade
-    jump start_troll_encounter
-
-label nitwit_start:
+    play sound "audio/NarratorNitwit1.mp3"
     "As you approach the pillar, you see a foreign text that appears to be in a language unlike anything you’ve ever studied back in Baldur's Gate."
-    "Could this text provide valuable information on where to go next?You approach the rock and begin to investigate it closer. Roll 12+ to pass"
+    
 
-    # Manual Investigation Roll Choice (Threshold: 12+)
-    menu:
-        "Investigation Check (Requires 12+):"
-        
-        "SUCCESS (12 or higher)":
-            jump investigation_success
+    label investigate_pillar:
+        play sound "audio/NarratorRock.mp3"
+        "Could this text provide valuable information on where to go next?You approach the rock and begin to investigate it closer. Roll 12+ to pass"
+
+        # Manual Investigation Roll Choice (Threshold: 12+)
+        menu:
+            "Investigation Check (Requires 12+):"
             
-        " FAILURE (Under 12)":
-            jump investigation_failure
+            "SUCCESS (12 or higher)":
+                jump investigation_success
+                
+            " FAILURE (Under 12)":
+                jump investigation_failure
 
 
 label investigation_success:
+    play sound "audio/NarratorHat.mp3"
     "You don't find anything valuable about the text, but you do see a red hat popping out from behind the rock that was not there previously "
     
     menu:
@@ -49,6 +52,7 @@ label investigation_success:
 
 
 label investigation_failure:
+    play sound "audio/NarratorUnsure.mp3"
     "You’re unsure if this text is valuable or not, but maybe someone nearby could help?"
     
     menu:
@@ -64,6 +68,7 @@ label meet_nitwit_peaceful:
 
 
 label meet_nitwit_surprise:
+    play sound "audio/NarratorSurprise.mp3"
     "While walking away, a shadowy figure jumps out from the monument and stands before you"
     play sound "audio/nitwit_surprise.mp3"
     n "STOP RIGHT THERE TRAVELER! I AM NITWIT THE WISE THE ALL KNOWING GUARDIAN OF THIS MONUMENT!"
@@ -87,7 +92,7 @@ label ignore_nitwit:
 
 
 label ask_for_help:
-
+    play sound "audio/NarratorDisgust.mp3"
     "He looks at you with deep disgust"
     play sound "audio/nitwit_language.mp3"
     n "What do you mean you dont know this language? This is bavarian, the best language in the entire world! How dare you!"
@@ -124,7 +129,7 @@ label riddle_correct:
     play sound "audio/nitwit_correct.mp3"
 
     n "Correct!"
-    "The gnome smiles at you, and reaches deep into his backpack to pull out a boo"
+    "The gnome smiles at you, and reaches deep into his backpack to pull out a book"
     n "Here is a dictionary to translate bavarian, I can give it to you for a fee..."
      
     jump get_dictionary
@@ -177,7 +182,7 @@ label curse:
 
 
 label persuasion_success:
-    
+    play sound "audio/NitwitPraise.mp3"
     "You fills his ears with praise of Nitwit the Generous, helper of lost travelers and ensure you will sing his praises forever more!"
     "Nitwit blushes, puffing out his chest."
     play sound "audio/nitwit_convince.mp3"
@@ -190,15 +195,18 @@ label persuasion_success:
 
 label story_ending:
     stop music fadeout 2.0
+    play sound "audio/NarratorTranslate.mp3"
     "You flip open the Bavarian dictionary and compare the characters to the writing on the monument."
     "Slowly, the mysterious ancient letters translate in your mind..."
     
-    
+    play sound "NarratorPhrase.mp3"
     "{b}\"Nitwit the Wise is a Fool.\"{/b}"
     
     if cursed:
-        "You chuckle, slipping the dictionary into your pocket, ignoring the tiny curse vibrating in your bones."
+        play sound "audio/NarratorBones.mp3"
+        "You chuckle, slipping the dictionary into your pocket, ignoring the tiny curse your companion bestowed upon your bones."
     else:
+        play sound "audio/NarratorHand.mp3"
         "You laugh out loud and set off into the new world, dictionary in hand."
 
     "CONGRATULATIONS - You completed the adventure!"
