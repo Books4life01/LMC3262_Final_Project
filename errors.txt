@@ -2,8 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 127: Indentation mismatch.
-    n "Correct!"
+File "game/script.rpy", line 29: ATL statement contains two expressions in a row; is one of them a misspelled property? If not, separate them with pass.
+    at truecenter
+                 ^
 
 Ren'Py Version: Ren'Py 8.5.3.26051504
-Tue Jul 14 15:11:04 2026
+Mon Jul 20 14:50:38 2026
