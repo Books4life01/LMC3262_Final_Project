@@ -17,8 +17,8 @@ label bismarck_intro:
 
 label bismarck_king:
     scene expression "#332211" # Adjust or add your background image here
-    king "Greetings, traveler. I have been observing your journey through this forest from atop this tower. You have done well so far. But I have one more task for you to prove your worth."
-    king "I am surrounded by four guardians. The three in front of me will each present you with a test. The smith behind me has forged a magical sword that will be the key back to your world. But only speak to him once you have proven yourself worthy by completing all three trials."
+    king "Greetings, traveler. I have been observing your journey through this forest from atop this tower. You truly might be the one to free these lands from accursed Victory. But I have one more task for you to prove your worth."
+    king "I am surrounded by four guardians. The three in front of me will each present you with a test. The smith behind me is the keeper of the Champions Blade, but you may only speak to him once you have proven yourself worthy by completing all three trials."
 
     menu:
         "Speak to Atlas" if not completed_atlas:
@@ -44,7 +44,7 @@ label bismarck_king:
 label atlas_trial:
     atlas "I have held the world on my back since the dawn of time."
     atlas "Hold the world for 15 seconds, and prove you possess the strength to bear impossible burdens."
-    "Stand in Atlas's position for 15 seconds. Your Guardian Angel will time you."
+    sys "Stand in Atlas's position for 15 seconds. Your Guardian Angel will time you."
 
     menu:
         "Guardian Angel: Did the player hold the pose for 15 seconds?":
@@ -69,14 +69,15 @@ label sibyl_trial:
     # Correct answer is 1901
     menu:
         "Guardian Angel: Did the player give the correct answer?":
-            "Yes":
-                sibyl "Correct. You may move on to the next trial."
-                $ completed_sibyl = True
-                jump bismarck_king
-                
-            "No":
-                sibyl "Incorrect! Try again."
-                jump sibyl_trial
+            menu:
+                "Yes":
+                    sibyl "Correct. You may move on to the next trial."
+                    $ completed_sibyl = True
+                    jump bismarck_king
+                    
+                "No":
+                    sibyl "Incorrect! Try again."
+                    jump sibyl_trial
 
 
 # -------------------------------------------------------------------------
@@ -130,15 +131,17 @@ label fight_w_slingshot:
 label sword:
     "Having completed all the trials, you approach the legendary sword."
     siegfried "You have proven yourself worthy. But one final test remains."
-    siegfried "Roll a physical d20. If you get 17 or higher, you shall receive not only my sword, but also my enchanted cloak."
+    siegfried "Roll a physical d20. If you get 17 or higher, you shall receive not only the Champions Blade, but also the infamous Unseen Cloak which graces my shoulders."
     
     menu:
         "Roll is 17 or higher":
             "As you grasp the sword's hilt, you feel its powerful aura."
             "Siegfried also drapes the enchanted cloak across your shoulders."
+            $ cloak_obtained = False
+
             
         "Roll is under 17":
             "As you grasp the sword's hilt, you feel its powerful aura."
-            
-    "**[TRIALS COMPLETE — LEGENDARY SWORD ACQUIRED]**"
+    "Brave solider, before you leave take heed. You must approach the tyrant unseen before you launch your attack. There is a series of underground tunnels that should lead you to its perch."
+    "Your gaurdian angel should know the way and guide you. Best of luck!"
     return

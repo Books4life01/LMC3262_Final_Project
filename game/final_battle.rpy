@@ -1,3 +1,6 @@
+# Character Definitions
+define nike = Character("Nike")
+
 # Track stealth performance modifier from GA
 default stealth_modifier = 0
 
@@ -5,13 +8,18 @@ label victory_tunnel_start:
     scene bg_dark_tunnel with fade
     play music "audio/bgm_dungeon_dread.mp3"
     
-    "Armed with Bismarck's blade, you slip into the shadows at the mouth of the pedestrian tunnel leading beneath the roundabout to Siegessäule."
+    "Armed with the Champions's blade, you slip into the shadows at the mouth of the pedestrian tunnel leading beneath the roundabout to the tyrant perch."
+    show tunnel at truecenter
     "Nike's golden light pulses heavily from above. To approach unseen, you must tread with absolute silence..."
+
+    # Check for Unseen Cloak from Siegfried
+    if cloack_obtained:
+        "You wrap Siegfried's enchanted cloak around your shoulders. Its weave distorts light and muffles your footsteps, granting you supernatural stealth! + 5 stealth bonus"
 
     # =========================================================================
     # STEALTH PERFORMANCE & PHYSICAL STEALTH ROLL (DC 15)
     # =========================================================================
-    sys "🥷 GA STEALTH CHECK: The player must tip-toe in real life through the tunnel/area with complete stealth!"
+    sys "STEALTH CHECK: The player must tip-toe in real life through the tunnel/area with complete stealth!"
 
     menu:
         "Guardian Angel Judge: Perfect silent tiptoeing! (+3 Roll Bonus)":
@@ -22,8 +30,12 @@ label victory_tunnel_start:
             $ stealth_modifier = 0
             "Your boot clips a loose rock, but you freeze before the sound echoes too far."
 
+    # Determine calculation string & value for system prompt
+    $ cloak_bonus = 5 if cloack_obtained else 0
+    $ total_stealth_mod = stealth_modifier + cloak_bonus
+
     # Physical d20 Stealth Roll
-    sys "🎲 PHYSICAL ROLL: Roll a d20 for Stealth! Add your GA Modifier (+[stealth_modifier]). Target DC is 15."
+    sys "🎲 PHYSICAL ROLL: Roll a d20 for Stealth! Add your Stealth Modifier (+[total_stealth_mod]). Target DC is 15."
 
     menu:
         "🎲 Total Stealth Roll was 15 or HIGHER (SUCCESS)":
@@ -35,7 +47,8 @@ label victory_tunnel_start:
             play sound "audio/stealth_fail.mp3"
             $ stealth_buff = 0
             "**[STEALTH FAILED]** A flock of tunnel birds scatters, alerting Nike above! You lose the opportunity for a stealth ambush (+0)."
-
+            
+    hide tunnel
     call victory_column_climax
 
 
@@ -44,6 +57,7 @@ label victory_tunnel_start:
 # =========================================================================
 label victory_column_climax:
     scene bg_victory_column with fade
+    show victory at truecenter
     play music "audio/bgm_final_boss.mp3"
     
     "You burst out of the tunnel at the base of the massive Victory Column!"
@@ -54,7 +68,11 @@ label victory_column_climax:
 
     "As you draw your sword, the power of your journey surges through you:"
 
-    if duck_blessing:
+    # Default knowledge from translated dictionary
+    $ total_modifier += 5
+    "📖 **Bavarian Knowledge (+5):** Armed with translations from the ancient texts, you spot the vulnerable rune etched at the joint of her golden wings!"
+
+    if forest_blessing:
         $ total_modifier += 5
         "🌊 **Blessing of the Forest (+5):** Ancient spring water magic wraps around you, shielding your mind from Nike's blinding radiance!"
 
@@ -65,10 +83,6 @@ label victory_column_climax:
     if lion_companion:
         $ total_modifier += 5
         "🦁 **Lion Companion (+5):** Your spectral lion companion prowls at your side, letting out a roar that draws Nike's celestial gaze away from you!"
-
-    if dictionary_obtained:
-        $ total_modifier += 5
-        "📖 **Bavarian Knowledge (+5):** Armed with translations from the ancient texts, you spot the vulnerable rune etched at the joint of her golden wings!"
 
     if stealth_buff > 0:
         $ total_modifier += 5
@@ -81,7 +95,7 @@ label victory_column_climax:
     # =========================================================================
     # GA SPEAR THROW PERFORMANCE & FINAL PHYSICAL d20 ROLL (DC 30)
     # =========================================================================
-    "Nike turns toward you: 'MORTAL! YOU DARE STAND BENEATH MY COLUMN OF VICTORY?'"
+    nike "MORTAL! YOU DARE STAND BENEATH MY COLUMN OF VICTORY?"
     "You raise Bismarck's sword, preparing to hurl it toward the sky to shatter her golden perch!"
 
     sys "⚔️ GA PERFORMANCE CHECK: The player must physically mime throwing their sword/spear straight up at the statue with a dramatic battle cry!"
@@ -120,7 +134,7 @@ label finish_or_spare:
     play music "audio/bgm_climax_decision.mp3"
     
     "Nike lies weakened upon the cobblestones, her golden armor cracked and her spear broken."
-    "She looks up at you, her divine pride shattered. 'You... a mere mortal... have defeated victory itself...'"
+    nike "You... a mere mortal... have defeated victory itself..."
     
     "You step forward, picking up Bismarck's sword. The realm awaits your final decision."
 
@@ -134,7 +148,8 @@ label finish_or_spare:
         "🕊️ Spare Her: Offer your hand and show mercy to the fallen goddess.":
             play sound "audio/magic_chime.mp3"
             "You lower your blade and extend a hand."
-            "Nike gazes at you in shock, her harsh expression softening into awe. 'Mercy... a true virtue greater than victory.'"
+            "Nike gazes at you in shock, her harsh expression softening into awe."
+            nike "Mercy... a true virtue greater than victory."
             "She bows her head in respect, swearing to protect Tiergarten as a peaceful guardian rather than a tyrant."
             call game_ending_home
 
@@ -142,7 +157,7 @@ label finish_or_spare:
 label game_ending_home:
     play music "audio/bgm_victory_fanfare.mp3"
     
-    "A glowing dimensional portal opens at the base of the Siegessäule, humming with sweet, familiar air."
+    "A glowing dimensional portal opens at the base of the tower, humming with sweet, familiar air."
     "With your quest complete, you step through the rift, returning home as a true hero of the realm."
 
     "{b}THE END — THANK YOU FOR PLAYING!{/b}"

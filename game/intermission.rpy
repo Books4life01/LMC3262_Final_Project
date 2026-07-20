@@ -5,6 +5,7 @@
 label travel_intermission(destination_name, custom_text="You press onward down the winding forest path."):
     scene black with fade
     play sound "audio/footsteps_gravel.ogg"
+    show traveling at truecenter
     
     # Display the custom travel description
     "[custom_text]"
@@ -37,9 +38,10 @@ label travel_intermission(destination_name, custom_text="You press onward down t
 # ROUTE 1: AFTER LIONS (Node 1) -> HALFLING SANDBOX / TROLLS (Node 2)
 # -------------------------------------------------------------------------
 label after_lions:
-    "With the lions on the bridge dealt with, you leave the golden structure behind and dust off your boots."
-    
-    call travel_intermission("The Halfling Sandbox", "You follow the woodland path toward a commotion near a wooden playground in the distance.")
+    "With the lions on the bridge dealt with, you leave the golden structure behind and dust off your boots. Their talk of Nike was troubling, and you feel your purpose in this land is to free this land from Nike's rule."
+    "Your gaurdian angel reccomends you travel North to learn more about the land before you confront the winged monarch."
+
+    call travel_intermission("The Halfling Outpost", "You follow the woodland path north filled with determination towards a know Halfling Outpost")
 
     jump start_troll_encounter
 
@@ -49,6 +51,7 @@ label after_lions:
 # -------------------------------------------------------------------------
 label after_trolls:
     "With the halfling outpost saved and the trolls pacified, you wave goodbye to the little folk and venture deeper into the woods."
+    "Your gaurdian angel mentions an ancient text carved in stone, that may hold the secret to defeating Victory herself."
     
     call travel_intermission("The Stone Pillar", "You trek deep into the canopy, dodging overgrown roots and mossy stones.")
 
@@ -59,6 +62,7 @@ label after_trolls:
 # ROUTE 3: AFTER NITWIT (Node 3) -> BISMARCK MONUMENT (Node 4)
 # -------------------------------------------------------------------------
 label after_nitwit:
+    "Your gaurdian angel mentions the sword of victory is held by the King, who holds court with his attendants not to far ahead"
     "Leaving the ancient pillar behind, you push through the thick brush toward the edge of the forest clearing."
     
     call travel_intermission("The Bismarck Monument", "A wide stone plaza begins to emerge through the treeline as grand monuments appear ahead.")
@@ -70,9 +74,8 @@ label after_nitwit:
 # ROUTE 4: FINAL DEPARTURE / END OF CHAPTER
 # -------------------------------------------------------------------------
 label after_bismarck:
-    "With Siegfried's legendary blade in hand and the trials completed, you turn away from the grand monument."
+    "With the Champions Blade in hand and the trials completed, you turn towards the final challenge. Onwards, to Victory herself"
     
-    call travel_intermission("The Sanctuary Gates", "With your task complete, you make your victorious return trip back to the sanctuary.")
+    call travel_intermission("The Sanctuary Gates", "You make your way to the hidden tunnels")
 
-    "You step back through the sanctuary threshold. Your journey in this realm is complete!"
     return

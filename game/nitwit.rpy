@@ -1,5 +1,4 @@
 # Declare characters
-define p = Character("You (Barbarian)", color="#e11d48")
 define n = Character("Nitwit", color="#22c55e")
 
 # Initialize variables to track game state
@@ -31,16 +30,16 @@ label nitwit_start:
 
 label investigate_pillar:
     play sound "audio/NarratorRock.mp3"
-    "Could this text provide valuable information on where to go next? You approach the rock and begin to investigate it closer. Roll 12+ to pass."
+    "Could this text provide valuable information on how to defeat the tyrant Nike? You approach the rock and begin to investigate it closer. Roll 12+ to pass."
     
     # Manual Investigation Roll Choice (Threshold: 12+)
     menu:
         "Investigation Check (Requires 12+):"
         
-        "🎲 SUCCESS (12 or higher)":
+        " SUCCESS (12 or higher)":
             jump investigation_success
             
-        "🎲 FAILURE (Under 12)":
+        " FAILURE (Under 12)":
             jump investigation_failure
 
 
@@ -127,7 +126,7 @@ label riddle_wrong:
     n "Bah! Wrong! Completely wrong!"
     play sound "audio/nitwit_wrong.mp3"
     $ roll_modifier -= 1
-    "* Penalty applied: -1 to future rolls in this encounter (Current Penalty: [roll_modifier]) *"
+    sys "* Penalty applied: -1 to future rolls in this encounter (Current Penalty: [roll_modifier]) *"
     "Try again..."
     jump riddle_loop
 
@@ -153,6 +152,8 @@ label get_dictionary:
                     jump curse
 
         "Convince him to give it for free (Persuasion, DC 14)":
+            "Concoct an argument on why the gnome should give you the dictionary. Based on the argument your angel might give you advantage or disadvantage"
+
             sys "🎲 Roll Persuasion! Target: 14+. Current Modifier: [roll_modifier]"
             menu:
                 "SUCCESS (Total is 14 or higher)":
@@ -186,9 +187,7 @@ label curse:
     " **(Guardian Angel gives you a curse for the next interaction)**"
     hide gnome_pic with dissolve
     
-    # Trigger GA Curse selection logic if available
-    if renpy.has_label("trigger_curse"):
-        call trigger_curse
+    call trigger_curse
         
     jump story_ending
 
@@ -212,14 +211,13 @@ label story_ending:
     "Slowly, the mysterious ancient letters translate in your mind..."
     
     play sound "audio/NarratorPhrase.mp3"
-    "{b}\"Nitwit the Wise is a Fool.\"{/b}"
+    "{b}\"Only the Champions Blade can slay the winged Victory which plagues the land. \"{/b}"
     
     if cursed:
         play sound "audio/NarratorBones.mp3"
-        "You chuckle, slipping the dictionary into your pocket, ignoring the tiny curse your companion bestowed upon your bones."
+        "You commit the cryptic instruction to memory, slipping the dictionary into your pocket while ignoring the tiny curse your companion bestowed upon your bones."
     else:
         play sound "audio/NarratorHand.mp3"
-        "You laugh out loud and set off into the new world, dictionary in hand."
+        "You nod solemnly at the revelation, secure the dictionary in your pack, and set off into the  world."
 
-    "**[NODE COMPLETE — BAVARIAN DICTIONARY OBTAINED]**"
     return # Cleanly returns to your main script loop!
