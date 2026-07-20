@@ -9,6 +9,11 @@ define n = Character("Nitwit", color="#22c55e") # Green for the gnome
 default roll_modifier = 0 # Modified by failed riddle attempts
 default cursed = False # Tracks if Nitwit curses the player
 
+image bg_pillar = "images/statue.png"
+image gnome_pic:
+    "images/gnome.png"
+    zoom 0.6
+
 # The game starts here!
 label start:
 
@@ -18,11 +23,12 @@ label start:
     # 2. Start Background Music (BGM)
     play music "audio/bgm_forest.mp3"
 
-    # Begin Story
-    scene black with fade
-
-    jump lion_bridge_encounter
-
+    # Begin Story - Background is shown here and stays active
+    scene black
+    show bg_pillar at truecenter:
+        rotate 270
+        fit "contain"
+    with fade
     play sound "audio/NarratorNitwit1.mp3"
     "As you approach the pillar, you see a foreign text that appears to be in a language unlike anything you’ve ever studied back in Baldur's Gate."
     
@@ -66,6 +72,8 @@ label investigation_failure:
 label meet_nitwit_peaceful:
     play sound "audio/nitwit_nap.mp3"
     "The figure slowly moves his way around the monument, and approaches you..."
+    # Nitwit appears on screen softly
+    show gnome_pic at truecenter with dissolve
     n  "You woke me from my afternoon nap. Who dares to disturb nitwit the wise?"
     jump conversation_start
 
@@ -74,6 +82,8 @@ label meet_nitwit_surprise:
     play sound "audio/NarratorSurprise.mp3"
     "While walking away, a shadowy figure jumps out from the monument and stands before you"
     play sound "audio/nitwit_surprise.mp3"
+    # Nitwit suddenly jumps onto the screen
+    show gnome_pic at truecenter with dissolve
     n "STOP RIGHT THERE TRAVELER! I AM NITWIT THE WISE THE ALL KNOWING GUARDIAN OF THIS MONUMENT!"
     jump conversation_start
 
@@ -169,6 +179,8 @@ label grab_success:
     "You successfully take the dictionary from the gnome, he sighs"
     n "I wish I could have had some money to buy some doner today, but it seems as if you've helped yourself..."
     n "Good luck on the rest of your journey!"
+    # Player runs away, so Nitwit disappears from view
+    hide gnome_pic with dissolve
     jump story_ending
 
 
@@ -181,6 +193,8 @@ label curse:
     n "Fine! Take the stupid book, but I put a curse upon your head! Now get out of my sight!"
     $ cursed = True
     " **(DM gives you a curse for the next interaction)**"
+    # Player leaves his presence
+    hide gnome_pic with dissolve
     jump story_ending
 
 
@@ -191,9 +205,9 @@ label persuasion_success:
     play sound "audio/nitwit_convince.mp3"
     n "Well... I suppose a legendary sage like myself can spare a book. Here, take it!"
     n "Though I really wanted a doner kebab..."
+    # Interaction finishes naturally
+    hide gnome_pic with dissolve
     jump story_ending
-
-
 
 
 label story_ending:
