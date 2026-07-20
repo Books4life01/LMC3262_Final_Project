@@ -40,6 +40,7 @@ label start_troll_encounter:
     $ violent_acts = 0
     $ troll_1_completed = False
     $ troll_2_completed = False
+    $ duck_shrine_visited = False
     
     jump playground_hub
 
@@ -59,11 +60,53 @@ label playground_hub:
             
         "Approach the green-skinned, lovesick troll" if not troll_2_completed:
             jump troll_2_lovesick
-            
+        "Investigate a overgrown shrine a little away from the outpost" if not duck_shrine_visited:
+            jump duck_shrine_subquest
         "Confront all the remaining trolls at once (Trigger Climax)":
             jump playground_climax
 
 
+# -------------------------------------------------------------------------
+# SHRINE SUBQUEST: THE STONE DUCK BASIN
+# -------------------------------------------------------------------------
+
+label duck_shrine_subquest:
+    scene expression "#223322"
+    show duck_fountain at truecenter
+    
+    "Off to the side of the wooden play structure, half-buried in dry leaves, sits an ancient stone fountain."
+    "Four circular basins surround a familiar animal carved into the center. Reflections of the canopy glisten in the standing rain water."
+    
+    "This shrine radiates an ancient, quiet magic that could aid your battle... if approached with respect."
+
+    menu:
+        "Perform the Offering Trial (Real-Life Physical Check)":
+            "You decide to pay respects to the sleeping duck."
+            sys "Turn to your real-life Guardian Angel! You must pick up a small forest item (leaf, twig, woodchip) and gently drop it into an imaginary or real basin within 15 seconds without splashing or making noise."
+            
+            menu:
+                "Guardian Angel: Did the player execute a Silent & Gentle Offering? (Pass)":
+                    $ playground_passes += 1
+                    $ modifier_bonus += 2
+                    "The water ripples smoothly. A gentle blue light washes over you, soothing your weary limbs."
+                    sys "You receive the Duck's Tranquility! Gain +2 to your next roll."
+                    
+                "Guardian Angel: Did they splash, fumble, or fail the timing? (Fail)":
+                    "You drop the offering too heavily, causing a loud splash! The stone duck seems to glare at you in silent judgment."
+                    "A sudden wave of stagnant water-magic flares out in protest!"
+                    call trigger_curse
+
+        "Kick the stone basins to check for hidden loot":
+            $ violent_acts += 1
+            "You give the ancient stone basin a heavy kick."
+            "The ancient spirits of the shrine do not take kindly to your vandalism! Heavy, cursed water lashes out at your shins."
+            call trigger_curse
+        "Return to the halfling Village":
+            jump playground_hub
+
+    $ duck_shrine_visited = True
+    "You step away from the shrine and return to the main grounds."
+    jump playground_hub
 # -------------------------------------------------------------------------
 # TROLL 1: THE CONFUSED SHROOM-CAP (YELLOW TROLL)
 # -------------------------------------------------------------------------
@@ -71,48 +114,91 @@ label playground_hub:
 label troll_1_shroom:
     scene expression "#332211"
     show confused_troll at truecenter
-    "You approach the yellow, stump-like figure scratching its wooden head under a massive mushroom cap."
-    "It is leaning heavily against a thick wooden climbing frame, shaking it violently as if trying to uproot an actual pine tree."
+    "You approach the yellow, stump-like figure trembling under its massive mushroom cap."
+    "It is frantically shaking and tearing at a thick wooden climbing frame, scaring the halflings inside."
     
-    troll_yellow "Urrrgh... tree got square branches? Why logs so smooth and straight? Grumble shake, but no pinecones fall... Grumble hungry..."
+    troll_yellow "Urrrgh! Need big timber! Need heavy log! Must build wall to hide from scary stone demon!"
     
+    "He points a shaking wooden finger at a small mossy structure sitting a distance away from the halfling village"
+    
+    troll_yellow "Look at it! Sitting right there! Four gaping mouths full of dark swamp water... and a terrifying beast sleeping on top! Grumble shaking! Grumble must break tree fort to protect himself!"
+    hide confused_troll
+    show duck_fountain at truecenter 
+    "It seems Grumble's 'attack' on the halfling outpost is actually just a desperate, panicked attempt to hide from the fountain."
+    hide duck_fountain
+    show confused_troll at truecenter
+
     menu:
-        "Inspect the troll and try to guide it away (Insight Check, DC 10)":
+        "Walk over and inspect the 'stone demon' in real life":
+            sys "Look around your real-life environment! Walk over to the stone fountain with four water basins, inspect it closely, and come back to identify the creature."
+            jump duck_shrine_subquest
+        "Tell Grumble its not a demon":
+            menu:
+                "Tell Grumble: 'That's not a monster, it's a stone DUCK!'" if not troll_1_completed:
+                    troll_yellow "A... a duck? A little quack-quack bird?"
+                    "Grumble peeks out from behind his mushroom cap, squinting his big yellow eyes at the fountain."
+                    troll_yellow "Ohhh... it not got sharp teeth? It just duck sleeping on water bowls? Haha! Silly Grumble!"
+                    troll_yellow "Grumble not need wooden wall no more! Grumble stop shaking fort and go find mushrooms in the bushes. Thank you, sharp-eyed giant!"
+                    
+                    "The yellow troll rumbles in relief, lets go of the climbing frame, and happily toddles away into the muddy bushes."
+                    $ playground_passes += 1
+                    $ troll_1_completed = True
+
+                "Tell Grumble: 'That's a giant stone TURKEY!'":
+                    troll_yellow "A turkey?! With sharp gobbler-teeth?! That even worse!"
+                    "Your incorrect guess panics Grumble even further! He violently shakes the frame, unleashing a psychic blast of chaotic energy!"
+                    call trigger_curse
+                    $ troll_1_completed = True
+
+                "Tell Grumble: 'That's a vicious stone RABBIT!'":
+                    troll_yellow "A rabbit?! It gonna jump on Grumble's head and bite Grumble's ears!"
+                    "Grumble screams in terror and flails wildly, knocking heavy timber loose and triggering a psychic curse!"
+                    call trigger_curse
+                    $ troll_1_completed = True
+
+                "Tell Grumble: 'That's a swamp TOAD!'":
+                    troll_yellow "A toad?! It gonna spit poisonous slime on Grumble!"
+                    "In his blind panic, Grumble's chaotic magic flares out, striking you with a heavy curse!"
+                    call trigger_curse
+                    $ troll_1_completed = True
+
+        "Calm Grumble down with reason without inspecting the fountain (Insight Check, DC 10)":
             sys "Roll a physical d20 for an Insight Check."
             menu:
                 "Roll is 10 or higher (Pass)":
                     $ playground_passes += 1
-                    "You scratch your head in confusion to match its energy, then gently point toward the dense, muddy bushes nearby."
-                    troll_yellow "Ohhh! Dark soil! Squishy moss! Grumble thank giant buddy. Grumble go find mushrooms there!"
-                    "The yellow troll rumbles in appreciation, wandering away from the log climbing frame."
+                    "You mimic his cowering posture to gain his trust, then speak gently to convince him the stone structure is completely dormant."
+                    troll_yellow "You... you think stone thing sleeping? Not gonna eat Grumble? Okay... Grumble trust giant buddy. Grumble go find moss instead."
+                    "Grumble leaves the wooden fort intact and wanders away peacefully."
                     $ troll_1_completed = True
+                    
                 "Roll is under 10 (Fail)":
-                    "You try to gesture, but your movements are clumsy. The yellow troll startles!"
-                    troll_yellow "Aaargh! Keep away from Grumble's mushroom cap!"
-                    "It unleashes a sudden psychic backfire of clumsy, disoriented energy before resuming its shaking of the wooden logs."
+                    "Your attempt to calm him backfires—Grumble thinks you are trying to trick him into getting eaten!"
+                    troll_yellow "Liarrr! You working with stone demon! Keep away from Grumble!"
+                    "He unleashes a defensive psychic blast before clinging tighter to the timber frame."
                     call trigger_curse
                     $ troll_1_completed = True
 
-        "Attack the troll and try to scare it off (Strength Check, DC 8)":
+        "Attack Grumble to scare him away from the fort (Strength Check, DC 8)":
             $ violent_acts += 1
             sys "Roll a physical d20 for a Strength/Athletics Check."
             menu:
                 "Roll is 8 or higher (Pass)":
                     $ playground_passes += 1
-                    "You bare your teeth, let out a low snarl, and slam your fist hard against the thick timber frame, making the heavy wood thud with a deep, echoing boom."
-                    troll_yellow "Eeeek! Loud timber demon! Screaming giant! Grumble leaving, Grumble sorry!"
-                    "Terrified by your brute strength, the yellow troll cowers and retreats into the background."
+                    "You bare your teeth, let out a low snarl, and slam your fist hard against the timber frame!"
+                    troll_yellow "Eeeek! Loud timber demon! Screaming giant!"
+                    "Scared of both you AND the stone monster, Grumble shrieks and flees into the deep woods."
                     $ troll_1_completed = True
+                    
                 "Roll is under 8 (Fail)":
-                    "You lunged to strike, but your foot caught on a stray woodchip! You crash face-first into the dirt."
-                    troll_yellow "Haha! Silly heavy-foot giant fall down."
-                    "Insulted by the attack, it unleashes a sudden psychic blast of energy, inflicting a curse before resuming its shaking of the frame."
+                    "You lunge forward to strike, but trip over a woodchip and crash face-first into the dirt!"
+                    troll_yellow "Haha! Silly heavy-foot giant fall down!"
+                    "Insulted by your aggression, Grumble retaliates with a curse."
                     call trigger_curse
-                    "You hurt your pride and your shins. Grumble stands his ground, still blocking the climbing frame."
+                    $ troll_1_completed = True
 
     "You back away to plan your next move."
     jump playground_hub
-
 
 # -------------------------------------------------------------------------
 # TROLL 2: THE LOVESICK FLOWER-BEARER (GREEN TROLL)
@@ -218,7 +304,7 @@ label playground_evaluation:
         "GA: 'A messy skirmish, but a victory nonetheless. Let us keep moving before any more forest spirits awaken.'"
         
     "Consult your map. It is time to head to your next destination."
-    return
+    jump nitwit_start
 
 
 # =========================================================================
