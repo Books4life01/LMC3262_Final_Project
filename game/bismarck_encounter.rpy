@@ -4,7 +4,7 @@ define sibyl = Character("Sibyl")
 define warrior = Character("Warrior")
 define siegfried = Character("Siegfried")
 
-# defaults
+# Defaults
 default completed_atlas = False
 default completed_sibyl = False
 default completed_warrior = False
@@ -16,20 +16,30 @@ label bismarck_intro:
     jump bismarck_king
 
 label bismarck_king:
+    scene expression "#332211" # Adjust or add your background image here
     king "Greetings, traveler. I have been observing your journey through this forest from atop this tower. You have done well so far. But I have one more task for you to prove your worth."
     king "I am surrounded by four guardians. The three in front of me will each present you with a test. The smith behind me has forged a magical sword that will be the key back to your world. But only speak to him once you have proven yourself worthy by completing all three trials."
 
     menu:
         "Speak to Atlas" if not completed_atlas:
             jump atlas_trial
+
         "Speak to the Sibyl" if not completed_sibyl:
             jump sibyl_trial
+
         "Speak to the Warrior" if not completed_warrior:
             jump warrior_trial
+
         "Collect the sword" if completed_atlas and completed_sibyl and completed_warrior:
             jump sword
+
         "Leave":
             return
+
+
+# -------------------------------------------------------------------------
+# TRIAL 1: ATLAS
+# -------------------------------------------------------------------------
 
 label atlas_trial:
     atlas "I have held the world on my back since the dawn of time."
@@ -40,31 +50,38 @@ label atlas_trial:
         "Guardian Angel: Did the player hold the pose for 15 seconds?":
             atlas "You have proven your strength. You may move on to the next trial."
             $ completed_atlas = True
+            jump bismarck_king
             
         "Guardian Angel: The player failed or gave up.":
             "Your arms begin to shake as the weight becomes unbearable."
             atlas "The world is heavier than you imagined. Gather your strength, and try again."
             jump atlas_trial
 
-    jump bismarck_king
+
+# -------------------------------------------------------------------------
+# TRIAL 2: SIBYL
+# -------------------------------------------------------------------------
 
 label sibyl_trial:
     sibyl "I test your intelligence. Since what year have we been standing here?"
     "Your dictionary begins to glow. The inscriptions on the monument unscramble. Study the text on the front and back of the monument and give the Guardian Angel your answer."
 
-    # correct answer is 1901
+    # Correct answer is 1901
     menu:
-        "Guardian Angel: Did the player give the correct answer?"
-        "Yes":
-            sibyl "Correct. You may move on to the next trial."
-            $ completed_sibyl = True
-            
-        "No":
-            sibyl "Incorrect! Try again."
-            jump sibyl_trial
+        "Guardian Angel: Did the player give the correct answer?":
+            "Yes":
+                sibyl "Correct. You may move on to the next trial."
+                $ completed_sibyl = True
+                jump bismarck_king
+                
+            "No":
+                sibyl "Incorrect! Try again."
+                jump sibyl_trial
 
-    $ completed_sibyl=True
-    jump bismarck_king
+
+# -------------------------------------------------------------------------
+# TRIAL 3: WARRIOR
+# -------------------------------------------------------------------------
 
 label warrior_trial:
     warrior "You must confront this beast to pass."
@@ -79,7 +96,7 @@ label warrior_trial:
 
 label summon_lion:
     "The lion roars, scaring away the panther."
-    $ completed_warrior=True
+    $ completed_warrior = True
     jump bismarck_king
 
 label fight_yourself:
@@ -101,17 +118,27 @@ label slingshot:
 
 label fight_w_slingshot:
     "The panther attacks again. Luckily, you now have a slingshot. Hold the pebble in front of the stick to fire it."
-    $ completed_warrior=True
+    "You aim true and strike the panther, forcing it to flee!"
+    $ completed_warrior = True
     jump bismarck_king
+
+
+# -------------------------------------------------------------------------
+# CONCLUSION: SIEGFRIED & THE SWORD
+# -------------------------------------------------------------------------
 
 label sword:
     "Having completed all the trials, you approach the legendary sword."
     siegfried "You have proven yourself worthy. But one final test remains."
     siegfried "Roll a physical d20. If you get 17 or higher, you shall receive not only my sword, but also my enchanted cloak."
+    
     menu:
         "Roll is 17 or higher":
             "As you grasp the sword's hilt, you feel its powerful aura."
             "Siegfried also drapes the enchanted cloak across your shoulders."
+            
         "Roll is under 17":
             "As you grasp the sword's hilt, you feel its powerful aura."
+            
+    "**[TRIALS COMPLETE — LEGENDARY SWORD ACQUIRED]**"
     return

@@ -36,7 +36,7 @@ label victory_tunnel_start:
             $ stealth_buff = 0
             "**[STEALTH FAILED]** A flock of tunnel birds scatters, alerting Nike above! You lose the opportunity for a stealth ambush (+0)."
 
-    jump victory_column_climax
+    call victory_column_climax
 
 
 # =========================================================================
@@ -104,13 +104,13 @@ label victory_column_climax:
             "**CRITICAL HIT!**"
             "Bismarck's blade streaks through the air like a bolt of lightning, striking the core of Nike's golden pedestal!"
             "With a deafening crack, her divine shield shatters and Nike tumbles from her high column, crashing onto the stone courtyard below!"
-            jump finish_or_spare
+            call finish_or_spare
 
         "🎲 Total d20 Roll + Modifiers was LESS than 30 (MISSED)":
             play sound "audio/attack_fail.mp3"
             "Your blade grazes her divine armor, but her holy aura deflects the blow!"
             "Nike's blinding light washes over you, forcing a temporary retreat... (Try gathering remaining blessings or making a more epic throw!)"
-            jump victory_column_climax
+            call victory_column_climax
 
 
 # =========================================================================
@@ -129,14 +129,14 @@ label finish_or_spare:
             play sound "audio/sword_strike.mp3"
             "You deliver the final blow. Nike dissolves into a brilliant burst of golden starlight, dispersing harmlessly across the canopy of Tiergarten."
             "The oppressive weight over Berlin vanishes instantly. You stand as the undisputed conqueror of the realm."
-            jump game_ending_home
+            call game_ending_home
 
         "🕊️ Spare Her: Offer your hand and show mercy to the fallen goddess.":
             play sound "audio/magic_chime.mp3"
             "You lower your blade and extend a hand."
             "Nike gazes at you in shock, her harsh expression softening into awe. 'Mercy... a true virtue greater than victory.'"
             "She bows her head in respect, swearing to protect Tiergarten as a peaceful guardian rather than a tyrant."
-            jump game_ending_home
+            call game_ending_home
 
 
 label game_ending_home:
