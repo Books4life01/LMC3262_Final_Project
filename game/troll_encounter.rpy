@@ -92,9 +92,12 @@ label duck_shrine_subquest:
             menu:
                 "Guardian Angel: Did the player give a suitable and quick offering? (Pass)":
                     $ playground_passes += 1
+<<<<<<< HEAD
                     stop sound
                     play sound "audio/duck_sucess.mp3"
 
+=======
+>>>>>>> ad69bbd54d58ee46c21ece0b322942731c3c4c70
                     "The water ripples smoothly. A gentle blue light washes over you, soothing your weary limbs."
                     sys "You receive the Blessing of the Forest!"
                     $ forest_blessing = False
