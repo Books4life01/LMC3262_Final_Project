@@ -103,7 +103,7 @@ label duck_shrine_subquest:
                     $ forest_blessing = False
                     $ duck_shrine_visited = True
 
-                "Guardian Angel: Did they splash, fumble, or fail the timing? (Fail)":
+                    "Guardian Angel: Did they splash, fumble, or fail the timing? (Fail)":
                     stop sound
                     play sound "audio/duck_fail.mp3"
 
@@ -111,10 +111,10 @@ label duck_shrine_subquest:
                     "No blessing will be bestowed today."
                     $ duck_shrine_visited = True
 
-        "Kick the stone basins to check for hidden loot":
-            $ violent_acts += 1
-            stop sound
-            play sound "audio/duck_aggro.mp3"
+            "Kick the stone basins to check for hidden loot":
+                $ violent_acts += 1
+                stop sound
+                play sound "audio/duck_aggro.mp3"
 
             "You give the ancient stone basin a heavy kick."
             "The ancient spirits of the shrine do not take kindly to your vandalism! Heavy, cursed water lashes out at your shins."
