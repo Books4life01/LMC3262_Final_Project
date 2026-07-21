@@ -2,8 +2,8 @@
 
 
 label start:
-    call lion_bridge_encounter
-    call after_lions
+    # call lion_bridge_encounter
+    # call after_lions
     call start_troll_encounter
     call after_trolls
     call nitwit_start
@@ -16,7 +16,7 @@ label start:
 # Final Boss modifiers
 $ lion_companion = False
 $ forest_blessing = False
-$cloack_obtained = False
+$ cloak_obtained = False
 
 
 

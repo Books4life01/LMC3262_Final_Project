@@ -76,6 +76,6 @@ label after_nitwit:
 label after_bismarck:
     "With the Champions Blade in hand and the trials completed, you turn towards the final challenge. Onwards, to Victory herself"
     
-    call travel_intermission("The Sanctuary Gates", "You make your way to the hidden tunnels")
+    call travel_intermission("Nike's Perch", "You make your way to the hidden tunnels")
 
     return
