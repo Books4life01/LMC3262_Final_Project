@@ -13,7 +13,7 @@ label victory_tunnel_start:
     "Nike's golden light pulses heavily from above. To approach unseen, you must tread with absolute silence..."
 
     # Check for Unseen Cloak from Siegfried
-    if cloack_obtained:
+    if cloak_obtained:
         "You wrap Siegfried's enchanted cloak around your shoulders. Its weave distorts light and muffles your footsteps, granting you supernatural stealth! + 5 stealth bonus"
 
     # =========================================================================
@@ -31,7 +31,7 @@ label victory_tunnel_start:
             "Your boot clips a loose rock, but you freeze before the sound echoes too far."
 
     # Determine calculation string & value for system prompt
-    $ cloak_bonus = 5 if cloack_obtained else 0
+    $ cloak_bonus = 5 if cloak_obtained else 0
     $ total_stealth_mod = stealth_modifier + cloak_bonus
 
     # Physical d20 Stealth Roll

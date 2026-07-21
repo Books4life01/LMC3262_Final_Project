@@ -88,7 +88,6 @@ label duck_shrine_subquest:
             menu:
                 "Guardian Angel: Did the playergive a suitable and quick offering? (Pass)":
                     $ playground_passes += 1
-                    $ modifier_bonus += 2
                     "The water ripples smoothly. A gentle blue light washes over you, soothing your weary limbs."
                     sys "You receive the the Blessing of the Forst! "
                     $ forest_blessing = False
@@ -265,7 +264,7 @@ label playground_climax:
         "One troll has been dealt with, while the remaining one still watches the sandbox with chaotic intent."
         
     # Rebalanced dynamic DC for a maximum of 2 passes instead of 3
-    $ roar_dc = 5 if playground_passes == 2 else (12 if playground_passes == 1 else 18)
+    $ roar_dc = 5 if playground_passes >= 2 else (12 if playground_passes == 1 else 18)
 
     menu:
         "Use Barbarian Roar (Intimidation, Target [roar_dc]+)":

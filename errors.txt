@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/lion_bridge_encounter.rpy", line 31: expected statement.
-    "Try to get out (Trigger Climax)":
-                                     ^
+File "game/lion_bridge_encounter.rpy", line 23: ATL statement contains two expressions in a row; is one of them a misspelled property? If not, separate them with pass.
+    lion "We are the lions of Nike! We will not allow enemies of the Angel to cross!"
+                                                                                     ^
 
 Ren'Py Version: Ren'Py 8.5.3.26051504
-Mon Jul 20 14:59:08 2026
+Tue Jul 21 13:53:53 2026

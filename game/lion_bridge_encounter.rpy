@@ -6,19 +6,25 @@ default deception_dc = 13
 default intimidate_deceive = True
 default asked_nike = False
 default asked_why = False
-
 default wisdom = True
 
 label lion_bridge_encounter:
 
     scene expression "#332211"
     # TODO: transition to bridge background
-    show lions at truecenter
+    show lion_bridge:
+        xalign 0.5
+        yalign 0.5
+        zoom 0.25
 
     "You begin your journey by crossing over a golden bridge."
     "However, the moment you get to the middle, four lions suddenly surround the bridge!"
 
     lion "We are the lions of Nike! We will not allow enemies of the Angel to cross!"
+    show lion_transparent:
+        xalign 0.5
+        yalign 0.5
+        zoom 0.25
 
     sys "Note: actions that scare the lions raise Intimidation success odds later, but lower Deception success odds. Actions that persuade the lions raise Deception success odds, but lower Intimidation success odds."
 

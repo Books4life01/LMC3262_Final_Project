@@ -16,7 +16,7 @@ label start:
 # Final Boss modifiers
 $ lion_companion = False
 $ forest_blessing = False
-$cloack_obtained = False
+$ cloak_obtained = False
 
 
 
