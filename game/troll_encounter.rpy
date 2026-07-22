@@ -9,8 +9,6 @@ define troll_yellow = Character("Grumble (Yellow Troll)", color="#f1c40f")
 define troll_green = Character("Oakhaven (Green Troll)", color="#2ec865")
 
 # Initialize variables specific to this encounter
-default active_curse = "None"
-default has_bard_blessing = False
 default playground_passes = 0
 default roar_dc = 18
 
@@ -96,7 +94,7 @@ label duck_shrine_subquest:
 
                     "The water ripples smoothly. A gentle blue light washes over you, soothing your weary limbs."
                     sys "You receive the Blessing of the Forest!"
-                    $ has_bard_blessing = True
+                    $ forest_blessing = True
                     $ duck_shrine_visited = True
 
                 "Guardian Angel: Did they splash, fumble, or fail the timing? (Fail)":
