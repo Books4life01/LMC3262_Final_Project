@@ -1,27 +1,43 @@
-2026-07-21 15:46:17 UTC
-macOS-15.4.1-arm64-arm-64bit
+2026-07-22 12:59:20 UTC
+Windows-11-10.0.26200-SP0
 Ren'Py 8.5.3.26051504
 
-Early init took 18 ms
-Loading error handling took 14 ms
-Loading script took 265 ms
-Loading save slot metadata took 10 ms
+Early init took 49 ms
+Loading error handling took 22 ms
+Loading script took 84 ms
+Loading save slot metadata took 30 ms
 Loading persistent took 0 ms
-
-File "game/troll_encounter.rpy", line 114: Indentation mismatch.
-    "Kick the stone basins to check for hidden loot":
-DPI scale factor: 1.000000
-Interface start took 342 ms
+Running init code took 40 ms
+Loading analysis data took 3 ms
+Analyze and compile ATL took 1 ms
+Reloading save slot metadata took 7 ms
+Dump and make backups took 42 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 43 ms
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: b"Couldn't load nvlib." (can be ignored)
+Creating interface object took 3 ms
+Init translation took 0 ms
+Cleaning stores took 0 ms
+Load screen analysis took 14 ms
+Analyze screens took 2 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 0 ms
+Interface start took 311 ms
 
 Initializing gl2 renderer:
-primary display bounds: (0, 0, 1512, 982)
+primary display bounds: (0, 0, 1920, 1280)
 swap interval: 1 frames
 Windowed mode.
-Vendor: 'Apple'
-Renderer: 'Apple M4 Pro'
-Version: '2.1 Metal - 89.4'
-Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 4278190080), 'shifts': (16, 8, 0, 24), 'losses': (0, 0, 0, 0), 'current_w': 1512, 'current_h': 982, 'refresh_rate': 120, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
-Screen sizes: virtual=(1280, 720) physical=(1512, 858) drawable=(3024, 1716)
+Vendor: 'Microsoft Corporation'
+Renderer: 'D3D12 (Qualcomm(R) Adreno(TM) X1-45 GPU)'
+Version: '4.6 (Compatibility Profile) Mesa 26.2.0-devel (git-c1445345a4)'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 1920, 'current_h': 1280, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Screen sizes: virtual=(1280, 720) physical=(1920, 1191) drawable=(1920, 1191)
 Maximum texture size: 4096x4096
-Screen sizes: virtual=(1280, 720) physical=(1512, 858) drawable=(3024, 1716)
+Screen sizes: virtual=(1280, 720) physical=(1920, 1191) drawable=(1920, 1191)
 Maximum texture size: 4096x4096
