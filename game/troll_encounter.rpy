@@ -92,18 +92,14 @@ label duck_shrine_subquest:
             menu:
                 "Guardian Angel: Did the player give a suitable and quick offering? (Pass)":
                     $ playground_passes += 1
-<<<<<<< HEAD
-                    stop sound
                     play sound "audio/duck_sucess.mp3"
 
-=======
->>>>>>> ad69bbd54d58ee46c21ece0b322942731c3c4c70
                     "The water ripples smoothly. A gentle blue light washes over you, soothing your weary limbs."
                     sys "You receive the Blessing of the Forest!"
-                    $ forest_blessing = False
+                    $ has_bard_blessing = True
                     $ duck_shrine_visited = True
 
-                    "Guardian Angel: Did they splash, fumble, or fail the timing? (Fail)":
+                "Guardian Angel: Did they splash, fumble, or fail the timing? (Fail)":
                     stop sound
                     play sound "audio/duck_fail.mp3"
 
@@ -111,19 +107,19 @@ label duck_shrine_subquest:
                     "No blessing will be bestowed today."
                     $ duck_shrine_visited = True
 
-            "Kick the stone basins to check for hidden loot":
-                $ violent_acts += 1
-                stop sound
-                play sound "audio/duck_aggro.mp3"
+        "Kick the stone basins to check for hidden loot":
+            $ violent_acts += 1
+            stop sound
+            play sound "audio/duck_aggro.mp3"
 
             "You give the ancient stone basin a heavy kick."
             "The ancient spirits of the shrine do not take kindly to your vandalism! Heavy, cursed water lashes out at your shins."
             call trigger_curse
+            $ duck_shrine_visited = True
 
         "Return to the halfling Village":
             jump playground_hub
 
-    $ duck_shrine_visited = True
     "You step away from the shrine and return to the main grounds."
     jump playground_hub
 
@@ -326,6 +322,7 @@ label troll_2_lovesick:
 
             troll_green "Such words... they pierce my wooden bark! My lady of the tower has spoken through your voice! I shall stand here in silent, poetic contemplation..."
             $ playground_passes += 1
+            $ has_bard_blessing = True
             
         "Guardian Angel: Did they make a Standard Pass? (Solid attempt)":
             stop sound
