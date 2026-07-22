@@ -42,8 +42,7 @@ label after_lions:
     "Your gaurdian angel reccomends you travel North to learn more about the land before you confront the winged monarch."
 
     call travel_intermission("The Halfling Outpost", "You follow the woodland path north filled with determination towards a know Halfling Outpost")
-
-    jump start_troll_encounter
+    return
 
 
 # -------------------------------------------------------------------------
@@ -54,8 +53,7 @@ label after_trolls:
     "Your gaurdian angel mentions an ancient text carved in stone, that may hold the secret to defeating Victory herself."
     
     call travel_intermission("The Stone Pillar", "You trek deep into the canopy, dodging overgrown roots and mossy stones.")
-
-    jump nitwit_start
+    return
 
 
 # -------------------------------------------------------------------------
@@ -66,8 +64,7 @@ label after_nitwit:
     "Leaving the ancient pillar behind, you push through the thick brush toward the edge of the forest clearing."
     
     call travel_intermission("The Bismarck Monument", "A wide stone plaza begins to emerge through the treeline as grand monuments appear ahead.")
-
-    jump bismarck_intro
+    return
 
 
 # -------------------------------------------------------------------------

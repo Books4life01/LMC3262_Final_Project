@@ -5,11 +5,10 @@ define nike = Character("Nike")
 default stealth_modifier = 0
 
 label victory_tunnel_start:
-    scene bg_dark_tunnel with fade
+    scene expression "#f1c639"
     play music "audio/bgm_dungeon_dread.mp3"
-    
+    show tunnels at truecenter
     "Armed with the Champions's blade, you slip into the shadows at the mouth of the pedestrian tunnel leading beneath the roundabout to the tyrant perch."
-    show tunnel at truecenter
     "Nike's golden light pulses heavily from above. To approach unseen, you must tread with absolute silence..."
 
     # Check for Unseen Cloak from Siegfried
@@ -41,12 +40,12 @@ label victory_tunnel_start:
         "🎲 Total Stealth Roll was 15 or HIGHER (SUCCESS)":
             play sound "audio/stealth_success.mp3"
             $ stealth_buff = 5
-            "**[STEALTH SUCCESS]** You reach the end of the tunnel completely undetected! You gain the **Shadow Ambush Buff (+5)**!"
+            " You reach the end of the tunnel completely undetected! You gain the Shadow Ambush Buff !"
 
         "🎲 Total Stealth Roll was LESS than 15 (FAIL)":
             play sound "audio/stealth_fail.mp3"
             $ stealth_buff = 0
-            "**[STEALTH FAILED]** A flock of tunnel birds scatters, alerting Nike above! You lose the opportunity for a stealth ambush (+0)."
+            " A flock of tunnel birds scatters, alerting Nike above! You lose the opportunity for a stealth ambush ."
             
     hide tunnel
     call victory_column_climax
@@ -56,7 +55,7 @@ label victory_tunnel_start:
 # THE CLIMAX & BUFF TALLY (NIKE DC 30)
 # =========================================================================
 label victory_column_climax:
-    scene bg_victory_column with fade
+    scene expression "#f1c639"
     show victory at truecenter
     play music "audio/bgm_final_boss.mp3"
     
@@ -70,23 +69,23 @@ label victory_column_climax:
 
     # Default knowledge from translated dictionary
     $ total_modifier += 5
-    "📖 **Bavarian Knowledge (+5):** Armed with translations from the ancient texts, you spot the vulnerable rune etched at the joint of her golden wings!"
+    "📖 **Bavarian Knowledge (+5 Damage to next attack):** Armed with translations from the ancient texts, you spot the vulnerable rune etched at the joint of her golden wings!"
 
     if forest_blessing:
         $ total_modifier += 5
-        "🌊 **Blessing of the Forest (+5):** Ancient spring water magic wraps around you, shielding your mind from Nike's blinding radiance!"
+        "🌊 **Blessing of the Forest (+5 Damage to next attack):** Ancient spring water magic wraps around you, shielding your mind from Nike's blinding radiance!"
 
-    if bard_blessing:
+    if has_bard_blessing:
         $ total_modifier += 5
-        "🎵 **Bard's Blessing (+5):** A lingering heroic rhythm echoes in your pulse, steadying your hand and sharpening your focus!"
+        "🎵 **Bard's Blessing (+5 Damage to next attack):** A lingering heroic rhythm echoes in your pulse, steadying your hand and sharpening your focus!"
 
     if lion_companion:
         $ total_modifier += 5
-        "🦁 **Lion Companion (+5):** Your spectral lion companion prowls at your side, letting out a roar that draws Nike's celestial gaze away from you!"
+        "🦁 **Lion Companion (+5 Damage to next attack):** Your spectral lion companion prowls at your side, letting out a roar that draws Nike's celestial gaze away from you!"
 
     if stealth_buff > 0:
         $ total_modifier += 5
-        "🥷 **Shadow Ambush (+5):** Your silent approach through the tunnel gives you the element of surprise!"
+        "🥷 **Shadow Ambush (+5 Damage to next attack):** Your silent approach through the tunnel gives you the element of surprise!"
 
     if active_curses > 0:
         $ total_modifier -= active_curses
@@ -143,7 +142,7 @@ label finish_or_spare:
             play sound "audio/sword_strike.mp3"
             "You deliver the final blow. Nike dissolves into a brilliant burst of golden starlight, dispersing harmlessly across the canopy of Tiergarten."
             "The oppressive weight over Berlin vanishes instantly. You stand as the undisputed conqueror of the realm."
-            call game_ending_home
+            jump game_ending_home
 
         "🕊️ Spare Her: Offer your hand and show mercy to the fallen goddess.":
             play sound "audio/magic_chime.mp3"
@@ -151,7 +150,7 @@ label finish_or_spare:
             "Nike gazes at you in shock, her harsh expression softening into awe."
             nike "Mercy... a true virtue greater than victory."
             "She bows her head in respect, swearing to protect Tiergarten as a peaceful guardian rather than a tyrant."
-            call game_ending_home
+            jump game_ending_home
 
 
 label game_ending_home:
