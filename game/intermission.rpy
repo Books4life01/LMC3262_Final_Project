@@ -39,7 +39,7 @@ label travel_intermission(destination_name, custom_text="You press onward down t
 # -------------------------------------------------------------------------
 label after_lions:
     "With the lions on the bridge dealt with, you leave the golden structure behind and dust off your boots. Their talk of Nike was troubling, and you feel your purpose in this land is to free this land from Nike's rule."
-    "Your guardian angel reccomends you travel North to learn more about the land before you confront the winged monarch."
+    "Your guardian angel recommends you travel North to learn more about the land before you confront the winged monarch."
 
     call travel_intermission("The Halfling Outpost", "You follow the woodland path north filled with determination towards a know Halfling Outpost")
     return
