@@ -105,11 +105,7 @@ label duck_shrine_subquest:
                     "No blessing will be bestowed today."
                     $ duck_shrine_visited = True
 
-<<<<<<< HEAD
-                    "Kick the stone basins to check for hidden loot":
-=======
                 "Kick the stone basins to check for hidden loot":
->>>>>>> c9c16bf26ca701167b2eff59e4416f392296c2b6
                     $ violent_acts += 1
                     stop sound
                     play sound "audio/duck_aggro.mp3"
