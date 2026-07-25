@@ -6,7 +6,7 @@ default stealth_modifier = 0
 
 label victory_tunnel_start:
     scene expression "#f1c639"
-    play music "audio/bgm_dungeon_dread.mp3"
+    play music "bgm_dungeon_dread.mp3"
     show tunnels at truecenter
     "Armed with the Champions's blade, you slip into the shadows at the mouth of the pedestrian tunnel leading beneath the roundabout to the tyrant perch."
     "Nike's golden light pulses heavily from above. To approach unseen, you must tread with absolute silence..."
@@ -38,17 +38,17 @@ label victory_tunnel_start:
 
     menu:
         "🎲 Total Stealth Roll was 15 or HIGHER (SUCCESS)":
-            play sound "audio/stealth_success.mp3"
+            play sound "stealth_success.mp3"
             $ stealth_buff = 5
             " You reach the end of the tunnel completely undetected! You gain the Shadow Ambush Buff !"
 
         "🎲 Total Stealth Roll was LESS than 15 (FAIL)":
-            play sound "audio/stealth_fail.mp3"
+            play sound "stealth_fail.mp3"
             $ stealth_buff = 0
             " A flock of tunnel birds scatters, alerting Nike above! You lose the opportunity for a stealth ambush ."
             
     hide tunnel
-    call victory_column_climax
+    jump victory_column_climax
 
 
 # =========================================================================
@@ -57,7 +57,7 @@ label victory_tunnel_start:
 label victory_column_climax:
     scene expression "#f1c639"
     show victory at truecenter
-    play music "audio/bgm_final_boss.mp3"
+    play music "bgm_final_boss.mp3"
     
     "You burst out of the tunnel at the base of the massive Victory Column!"
     "High above on her golden pillar, Nike stands tall, her spear radiating blinding celestial power!"
@@ -94,6 +94,7 @@ label victory_column_climax:
     # =========================================================================
     # GA SPEAR THROW PERFORMANCE & FINAL PHYSICAL d20 ROLL (DC 30)
     # =========================================================================
+    play sound "nike_attack.mp3"
     nike "MORTAL! YOU DARE STAND BENEATH MY COLUMN OF VICTORY?"
     "You raise Bismarck's sword, preparing to hurl it toward the sky to shatter her golden perch!"
 
@@ -113,48 +114,50 @@ label victory_column_climax:
 
     menu:
         "🎲 Total d20 Roll + Modifiers equaled 30 or HIGHER (CRITICAL HIT!)":
-            play sound "audio/nike_shatter.mp3"
+            play sound "nike_shatter.mp3"
             "**CRITICAL HIT!**"
             "Bismarck's blade streaks through the air like a bolt of lightning, striking the core of Nike's golden pedestal!"
             "With a deafening crack, her divine shield shatters and Nike tumbles from her high column, crashing onto the stone courtyard below!"
-            call finish_or_spare
+            jump finish_or_spare
 
         "🎲 Total d20 Roll + Modifiers was LESS than 30 (MISSED)":
-            play sound "audio/attack_fail.mp3"
+            play sound "attack_fail.mp3"
             "Your blade grazes her divine armor, but her holy aura deflects the blow!"
             "Nike's blinding light washes over you, forcing a temporary retreat... (Try gathering remaining blessings or making a more epic throw!)"
-            call victory_column_climax
+            jump victory_column_climax
 
 
 # =========================================================================
 # FINAL MORAL CHOICE: FINISH HER OR SPARE HER
 # =========================================================================
 label finish_or_spare:
-    play music "audio/bgm_climax_decision.mp3"
+    play music "bgm_climax_decision.mp3"
     
     "Nike lies weakened upon the cobblestones, her golden armor cracked and her spear broken."
+    play sound "nike_defeat.mp3"
     nike "You... a mere mortal... have defeated victory itself..."
     
     "You step forward, picking up Bismarck's sword. The realm awaits your final decision."
 
     menu:
         "⚔️ Finish Her: Strike down the goddess and rid Tiergarten of her tyrant rule forever!":
-            play sound "audio/sword_strike.mp3"
+            play sound "sword_strike.mp3"
             "You deliver the final blow. Nike dissolves into a brilliant burst of golden starlight, dispersing harmlessly across the canopy of Tiergarten."
             "The oppressive weight over Berlin vanishes instantly. You stand as the undisputed conqueror of the realm."
             jump game_ending_home
 
         "🕊️ Spare Her: Offer your hand and show mercy to the fallen goddess.":
-            play sound "audio/magic_chime.mp3"
+            play sound "magic_chime.mp3"
             "You lower your blade and extend a hand."
             "Nike gazes at you in shock, her harsh expression softening into awe."
+            play sound "nike_mercy.mp3"
             nike "Mercy... a true virtue greater than victory."
             "She bows her head in respect, swearing to protect Tiergarten as a peaceful guardian rather than a tyrant."
             jump game_ending_home
 
 
 label game_ending_home:
-    play music "audio/bgm_victory_fanfare.mp3"
+    play music "bgm_victory_fanfare.mp3"
     
     "A glowing dimensional portal opens at the base of the tower, humming with sweet, familiar air."
     "With your quest complete, you step through the rift, returning home as a true hero of the realm."

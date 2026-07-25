@@ -25,7 +25,8 @@ label bismarck_intro:
 
 label bismarck_king:
     scene expression "#332211" # Adjust or add your background image here
-    show bismarck_img at truecenter
+    show bismarck_img at truecenter:
+        zoom 0.25
     play sound "audio/kingwelcome.mp3"
     king "Greetings, traveler. I have been observing your journey through this forest from atop this tower. You truly might be the one to free these lands from accursed Victory. But I have one more task for you to prove your worth."
     play sound "audio/kingtrials.mp3"
@@ -53,7 +54,8 @@ label bismarck_king:
 # -------------------------------------------------------------------------
 
 label atlas_trial:
-    show atlas_img at truecenter
+    show atlas_img at truecenter:
+        zoom 0.25
     play sound "audio/atlasintro.mp3"
     atlas "I have held the world on my back since the dawn of time."
     play sound "audio/atlasburdens.mp3"
@@ -80,7 +82,8 @@ label atlas_trial:
 # -------------------------------------------------------------------------
 
 label sibyl_trial:
-    show sibyl_img at truecenter
+    show sibyl_img at truecenter:
+        zoom 0.25
     play sound "audio/siyblquestion.mp3"
     sibyl "I test your intelligence. Since what year have we been standing here?"
     play sound "audio/narratordictionary.mp3"
@@ -107,7 +110,8 @@ label sibyl_trial:
 # -------------------------------------------------------------------------
 
 label warrior_trial:
-    show warrior_img at truecenter
+    show warrior_img at truecenter:
+        zoom 0.25
     play sound "audio/warriorchallenge.mp3"
     warrior "You must confront this beast to pass."
     if has_lion:
@@ -159,7 +163,8 @@ label fight_w_slingshot:
 # -------------------------------------------------------------------------
 
 label sword:
-    show siegfried_img at truecenter
+    show siegfried_img at truecenter:
+        zoom 0.25
     play sound "audio/narratorsword.mp3"
     "Having completed all the trials, you approach the legendary sword."
     play sound "audio/ornnworthy.mp3"

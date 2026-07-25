@@ -9,7 +9,10 @@ default intro_option_two = False
 label intro_forest_encounter:
 
     scene expression "#1a2419"
-    scene tiergartenintro 
+    scene tiergartenintro:
+        xalign 0.5
+        yalign 0.5
+        zoom 2.0 
     play sound "audio/narratorintro1.mp3"
     "You wake up in the forest, dusting yourself off you realize you are no longer in Baldur's Gate"
     "You ask yourself, How did I get here? But No answer comes to light."
@@ -38,10 +41,11 @@ label intro_statue_revelation:
     "The foreign entity, shows you a vision."
     scene black 
     show nikevision at truecenter:
-        zoom 0.6
+        zoom 0.8
 
 
 
+    play sound "nike_intro.mp3"
     nike "I AM NIKE, CONQUEROR OF HUMANITY AND GODDESS OF VICTORY"
 
     play sound "audio/fightvision.mp3"
@@ -49,6 +53,7 @@ label intro_statue_revelation:
     jump fight_for_mind
 
 label fight_for_mind:
+    play sound "nike_challenge.mp3"
     nike "IF YOU WISH TO GO HOME TO BALDUR'S GATE, YOU MUST GET THROUGH ME."
 
     sys "Cut her influence from your brain. DC: 10"
@@ -64,7 +69,10 @@ label fight_for_mind:
 
 label transition_to_end:
     hide nikevision
-    scene tiergartenintro 
+    scene tiergartenintro:
+        xalign 0.5
+        yalign 0.5
+        zoom 2.0  
     play sound "audio/guardianmeeting.mp3"
     "A shadow approaches you from beyond the bushes and introduces himself to you as your guardian angel"
     sys "Your guardian angel will be your guide as you complete quests to defeat the angel nike, tell him when you are ready to proceed with the next challenge."

@@ -1,3 +1,4 @@
 **/*.rpyc.bak
 **/*.rpyc
 **/*.bak
+game/bismarck_encounter.rpyc
