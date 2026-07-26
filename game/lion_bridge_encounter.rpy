@@ -65,7 +65,7 @@ label lion_dialogue:
                     play sound "lion_intimidation_pass.wav"
                     lion "W-well as impressive as that sounds, it will be no match for Nike!"
                     sys "The lion's trust in you has gone down! The lion's fear of you has gone up!"
-                    $ intimidate_dc -= 2
+                    $ intimidate_dc -= 3
                     $ persuasion_dc += 1
                     $ intimidate_deceive = False
                 "Failure <[intimidate_dc]":
@@ -88,7 +88,7 @@ label lion_dialogue:
                     lion "Yes! Cower in fear of the glory of our goddess! I like this one"
                     sys "The lion's trust in you has gone up! The lion's fear of you has gone up!"
                     $ intimidate_dc += 1
-                    $ persuasion_dc -= 2
+                    $ persuasion_dc -= 3
                     $ intimidate_deceive = False
                 "Failure <[deception_dc]":
                     play sound "lion_deception_fail.wav"
@@ -120,8 +120,8 @@ label lion_dialogue:
                             "The lions look unsure of themselves, thrown off guard and having to try and consider what you told them."
                             stop sound
                             sys "The lion's trust in you has gone up! The lion's fear of you has gone up!"
-                            $ intimidate_dc -= 2
-                            $ deception_dc -= 2
+                            $ intimidate_dc -= 3
+                            $ deception_dc -= 3
                             $ wisdom = False
                         "Failure <[13]":
                             play sound "narr_int_fail.mp3"

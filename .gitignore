@@ -2,3 +2,7 @@
 **/*.rpyc
 **/*.bak
 game/bismarck_encounter.rpyc
+game/cache/bytecode-312.rpyb
+game/cache/bytecode-312.rpyb
+game/cache/screens.rpyb
+game/cache/bytecode-312.rpyb
