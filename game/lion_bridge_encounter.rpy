@@ -23,12 +23,15 @@ label lion_bridge_encounter:
     "However, the moment you get to the middle, four lions suddenly surround you!"
 
     stop sound
-    #TODO lion sound
-    lion "We are the lions of Nike! We will not allow enemies of the Angel to cross!"
+    play sound "lionroar.mp3"
     show lion_transparent:
         xalign 0.5
         yalign 0.5
         zoom 0.25
+    " "
+    #TODO lion sound
+    play sound "lion_introduction.wav"
+    lion "We are the lions of Nike! We will not allow enemies of the Angel to cross!"
 
     stop sound
     sys "Note: actions that scare the lions raise Intimidation success odds later, but lower Persuasion success odds. Actions that persuade the lions raise persuasion success odds, but lower Intimidation success odds."
@@ -46,8 +49,11 @@ label lion_hub:
 label lion_dialogue:
     menu:
         "\"Who is Nike?\"" if not asked_nike:
-            #TODO lion sound
-            lion "Why, Nike is the one who will conquer these lands! She sits in the middle of Tiergarten on her column of victory, ready to conquer the entirety of Berlin! Then the savannas of Berlin will be ours to roam around and hunt in!"
+            play sound "lion_nike_expo.wav"
+            lion "Why, Nike is the one who will conquer these lands! 
+            She sits in the middle of Tiergarten on her column of victory, 
+            ready to conquer the entirety of Berlin! Then the savannas of 
+            Berlin will be ours to roam around and hunt in!"
             $asked_nike = True
             jump lion_dialogue   # <--- Loops back to dialogue menu safely
 
@@ -56,7 +62,7 @@ label lion_dialogue:
             sys "DC: [intimidate_dc]"
             menu:
                 "Success >=[intimidate_dc]":
-                    #TODO lion dialogue
+                    play sound "lion_intimidation_pass.wav"
                     lion "W-well as impressive as that sounds, it will be no match for Nike!"
                     sys "The lion's trust in you has gone down! The lion's fear of you has gone up!"
                     $ intimidate_dc -= 2
@@ -64,33 +70,41 @@ label lion_dialogue:
                     $ intimidate_deceive = False
                 "Failure <[intimidate_dc]":
                     #TODO lion dialogue
-                    lion "HA! I would tell you to go back to preschool, but you couldn't even defeat the kids there! Hahahaha!!!"
+                    play sound "lion_intimidation_fail.wav"
+                    lion "HA! Look how skinny you are! Barbarian??? You look like a humanities professor!
+                    How could you defeat Nike? You probably couldn't even defeat a fly! Hahahaha!!!"
                     sys "The lion's trust in you has gone down! The lion's fear of you has gone down!"
                     $ intimidate_dc += 1
                     $ persuasion_dc += 1
                     $ intimidate_deceive = False
             jump lion_hub
 
-        "(Deception) Get on your knees and pretend to be afraid of Nike" if intimidate_deceive:
+        "(Deception) Get on your knees and pretend to be afraid of Nike to earn the trust of the lions" if intimidate_deceive:
             sys "You are required to act afraid in real life. Your guardian angel may give you an advantage if you actually seem scared, or a disadvantage if it seems obviously fake."
             sys "DC: [deception_dc]"
             menu:
                 "Success >=[deception_dc]":
-                    lion "Yes! Cower in fear of the glory of our goddess!"
+                    play sound "lion_deception_pass.wav"
+                    lion "Yes! Cower in fear of the glory of our goddess! I like this one"
                     sys "The lion's trust in you has gone up! The lion's fear of you has gone up!"
                     $ intimidate_dc += 1
                     $ persuasion_dc -= 2
                     $ intimidate_deceive = False
                 "Failure <[deception_dc]":
-                    lion "You are mocking us! You are not actually afraid! How insulting, we shall have your head for this!"
+                    play sound "lion_deception_fail.wav"
+                    lion "You are mocking us! You are not actually afraid! How insulting, 
+                    keep acting this way and we shall have your head!"
                     sys "The lion's trust in you has gone down! The lion's fear of you has gone down!"
                     $ intimidate_dc += 1
-                    $ deception_dc += 1
+                    $ persuasion_dc += 1
                     $ intimidate_deceive = False
             jump lion_hub
 
         "\"Why do you want to conquer Berlin?\"" if not asked_why:
-            lion "The savannas of Berlin will be our paradise! All that the light touches will be ours! Like in the lion king! And we will spend all day hunting the gazelle of Berlin!"
+            play sound "lion_lion_king.wav"
+            lion "The savannas of Berlin will be our paradise! 
+            All that the light touches will be ours! Like in the lion king! 
+            And we will spend all day hunting the gazelle of Berlin!"
             $asked_why = True
             menu:
                 "(Intelligence) Try to figure out any flaws in the lion's logic. DC: 13" if wisdom:
@@ -99,7 +113,7 @@ label lion_dialogue:
                             play sound "narr_int_pass.mp3"
                             "You realize that so far you haven't seen any savannas in Berlin. In fact, it seems to be a big city with crowded streets! Not the kind of land the lions are hoping for. You tell the lions this."
                             stop sound
-                            #TODO lion dialogue
+                            play sound "lion_int_pass.wav"
                             lion "What?? That- that can't be right..."
                             stop sound
                             play sound "narr_lions_confused.mp3"
@@ -113,7 +127,7 @@ label lion_dialogue:
                             play sound "narr_int_fail.mp3"
                             "You think and think, and you can't find anything wrong with the lion's logic! It seems that the savannas of Berlin really are in danger. The lions watch you think and think that you are scared."
                             stop sound
-                            #TODO lion dialogue
+                            play sound "lion_int_fail.wav"
                             lion "Hahaha! That's right! Be intimidated by our coming reign!"
                             sys "The lion's trust in you has gone down! The lion's fear of you has gone down!"
                             $ intimidate_dc += 1
@@ -134,8 +148,8 @@ label lion_climax:
                 "Success >=[intimidate_dc]":
                     play sound "narr_intimidate_pass.mp3"
                     "The lions immediately cower! Frightened, they run away and clear the bridge for you."
-                    stop sounds
-                    #TODO lion dialogue
+                    stop sound
+                    play sound "lion_intimidate_pass_2.wav"
                     lion "Clearly you are much more intimidating than Nike. We want to be on your good side, so if you ever need our help, you can summon us."
                     sys "You receive the Lion's call! You can summon a lion to fight for you in the final encounter."
                     $ lion_companion = True
@@ -149,7 +163,7 @@ label lion_climax:
                     "They attack you, and though you manage to defeat them, you are heavily wounded."
                     stop sound
                     sys "Your guardian angel must pick a curse for you."
-                    call trigger_curse
+                    jump trigger_curse
                     return  # <--- Returns to main script/loop
 
         "Try to convince the lions to defect from Nike (Persuasion dc: [persuasion_dc])":
@@ -157,13 +171,13 @@ label lion_climax:
             "Your guardian angel may give you an advantage if you are convincing, or a disadvantage if you are not at all."
             menu:
                 "Success >=[persuasion_dc]":
-                    #TODO add lion dialogue
+                    play sound "lion_persuade_pass.wav"
                     lion "Wow! I never thought of it like that!"
                     stop sound
                     play sound "narr_persuade_pass.mp3"
                     "One of the lions bows, then slowly clears the path for you out of the bridge."
                     stop sound
-                    #TODO add lion dialogue
+                    play sound "lion_persuade_pass_2.wav"
                     lion "From now on, we will no longer fight for Nike. As a show of our gratitude, if you ever need our help, you may summon us. Thank you, friend."
                     stop sound
                     sys "You receive the Lion's call! You can summon a lion to fight for you in the final encounter."
@@ -178,5 +192,5 @@ label lion_climax:
                     "They attack you, and though you manage to defeat them, you are heavily wounded."
                     stop sound
                     sys "Your guardian angel must pick a curse for you."
-                    call trigger_curse
+                    jump trigger_curse
                     return  # <--- Returns to main script/loop

@@ -110,10 +110,10 @@ label duck_shrine_subquest:
                     stop sound
                     play sound "audio/duck_aggro.mp3"
 
-            "You give the ancient stone basin a heavy kick."
-            "The ancient spirits of the shrine do not take kindly to your vandalism! Heavy, cursed water lashes out at your shins."
-            call trigger_curse
-            $ duck_shrine_visited = True
+                    "You give the ancient stone basin a heavy kick."
+                    "The ancient spirits of the shrine do not take kindly to your vandalism! Heavy, cursed water lashes out at your shins."
+                    jump trigger_curse
+                    $ duck_shrine_visited = True
 
         "Return to the halfling Village":
             jump playground_hub
@@ -186,7 +186,7 @@ label troll_1_shroom:
                     stop sound  # Cuts audio on click
                     play sound "audio/grumble_incorrect_guess.mp3"
                     "Your incorrect guess panics Grumble even further! He violently shakes the frame, unleashing a psychic blast of chaotic energy!"
-                    call trigger_curse
+                    jump trigger_curse
                     $ troll_1_completed = True
 
                 "Tell Grumble: 'That's a vicious stone RABBIT!'":
@@ -197,7 +197,7 @@ label troll_1_shroom:
                     play sound "audio/grumble_incorrect_guess.mp3"
 
                     "Your incorrect guess panics Grumble even further! He violently shakes the frame, unleashing a psychic blast of chaotic energy!"
-                    call trigger_curse
+                    jump trigger_curse
                     $ troll_1_completed = True
 
                 "Tell Grumble: 'That's a swamp TOAD!'":
@@ -208,7 +208,7 @@ label troll_1_shroom:
                     play sound "audio/grumble_incorrect_guess.mp3"
 
                     "Your incorrect guess panics Grumble even further! He violently shakes the frame, unleashing a psychic blast of chaotic energy!"
-                    call trigger_curse
+                    jump trigger_curse
                     $ troll_1_completed = True
 
         "Calm Grumble down with reason without inspecting the fountain (Insight Check, DC 10)":
@@ -243,7 +243,7 @@ label troll_1_shroom:
                     play sound "audio/grumble_pacify_fail_02.mp3"
 
                     "He unleashes a defensive psychic blast before clinging tighter to the timber frame."
-                    call trigger_curse
+                    jump trigger_curse
                     $ troll_1_completed = True
 
         "Attack Grumble to scare him away from the fort (Strength Check, DC 8)":
@@ -279,7 +279,7 @@ label troll_1_shroom:
                     play sound "audio/grumble_scare_fail_02.mp3"
 
                     "Insulted by your aggression, Grumble retaliates with a curse."
-                    call trigger_curse
+                    jump trigger_curse
                     $ troll_1_completed = True
 
     "You back away to plan your next move."
@@ -346,7 +346,7 @@ label troll_2_lovesick:
             play sound "audio/narr_poem_fail_02.mp3"
 
             "It shrieks a high-pitched wooden scrape, rattling your brain!"
-            call trigger_curse
+            jump trigger_curse
             
     $ troll_2_completed = True
     "You step back to evaluate your next move."
@@ -398,7 +398,7 @@ label playground_climax:
                     "They refuse to be intimidated. You must fall back and deal with them the hard way."
 
                     "Your spectacular failure leaves you open to their combined psychic backfire!"
-                    call trigger_curse
+                    jump trigger_curse
                     jump playground_hub
 
 

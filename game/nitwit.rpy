@@ -187,7 +187,7 @@ label curse:
     " **(Guardian Angel gives you a curse for the next interaction)**"
     hide gnome_pic with dissolve
     
-    call trigger_curse
+    jump trigger_curse
         
     jump story_ending
 

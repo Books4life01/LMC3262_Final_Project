@@ -10,7 +10,7 @@ default active_curses = 0  # Tracks total number of curses accumulated for your 
 
 
 label start:
-    call lion_bridge_encounter
+    call intro_forest_encounter
     call after_lions
     call start_troll_encounter
     call after_trolls
