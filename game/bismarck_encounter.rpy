@@ -33,10 +33,10 @@ label bismarck_king:
     play sound "audio/kingwelcome.mp3"
     king "Greetings, traveler. I have been observing your journey through this forest from atop this tower. You truly might be the one to free these lands from accursed Victory. But I have one more task for you to prove your worth."
     stop sound
-    play sound "audio/kingtrials.mp3"
+    play sound "audio/king_2.mp3"
     king "I am surrounded by four guardians. The three in front of me will each present you with a test."
     king "The smith behind me is the keeper of the Champions Blade, but you may only speak to him once you have proven yourself worthy by completing all three trials."
-
+    stop audio
 
 label trial_menu:
     menu:
@@ -69,7 +69,7 @@ label atlas_trial:
     play sound "audio/atlasburdens.mp3"
     atlas "Hold the world for 15 seconds, and prove you possess the strength to bear impossible burdens."
     sys "Stand in Atlas's position for 15 seconds. Your Guardian Angel will time you."
-
+    stop audio
     menu:
         "Guardian Angel: The player held the pose for 15 seconds.":
             stop sound
